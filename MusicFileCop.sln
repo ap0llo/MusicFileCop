@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop", "MusicFileCop\src\MusicFileCop.csproj", "{032CFF31-5CAD-4507-B9A5-604A91F2FF55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Rules", "MusicFileCop.Rules\src\MusicFileCop.Rules.csproj", "{0CC834BD-82C6-444F-806D-E4310D15872A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Model", "MusicFileCop.Model\src\MusicFileCop.Model.csproj", "{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{032CFF31-5CAD-4507-B9A5-604A91F2FF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032CFF31-5CAD-4507-B9A5-604A91F2FF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032CFF31-5CAD-4507-B9A5-604A91F2FF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032CFF31-5CAD-4507-B9A5-604A91F2FF55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC834BD-82C6-444F-806D-E4310D15872A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC834BD-82C6-444F-806D-E4310D15872A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC834BD-82C6-444F-806D-E4310D15872A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC834BD-82C6-444F-806D-E4310D15872A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
