@@ -62,7 +62,10 @@
     <Compile Include="Interfaces\FileSystem\IDirectory.cs" />
     <Compile Include="Interfaces\FileSystem\IFile.cs" />
     <Compile Include="Interfaces\FileSystem\IFileSystemLoader.cs" />
+    <Compile Include="Interfaces\ICheckable.cs" />
+    <Compile Include="Interfaces\IConsistencyChecker.cs" />
     <Compile Include="Interfaces\IFileMapper.cs" />
+    <Compile Include="Interfaces\Output\IOutputWriter.cs" />
     <Compile Include="Interfaces\Metadata\IAlbum.cs" />
     <Compile Include="Interfaces\Metadata\IArtist.cs" />
     <Compile Include="Interfaces\Metadata\IDisk.cs" />
@@ -75,6 +78,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

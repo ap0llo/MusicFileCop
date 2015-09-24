@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model.Rules
 {
-    public interface IRule<T>
+    public interface IRule<T> where T : ICheckable
     {     
         string Description { get; }
 

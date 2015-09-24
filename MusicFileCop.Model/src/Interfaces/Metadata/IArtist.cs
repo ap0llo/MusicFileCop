@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model.Metadata
 {
-    public interface IArtist
+    public interface IArtist : ICheckable
     {
 
         string Name { get; }
