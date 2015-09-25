@@ -49,6 +49,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\Configuration\ConfigurationLoader.cs" />
+    <Compile Include="Implementation\Configuration\HierarchicalConfigurationNode.cs" />
+    <Compile Include="Implementation\ConsistencyChecker.cs" />
     <Compile Include="Implementation\FileMapper.cs" />
     <Compile Include="Implementation\FileSystem\Directory.cs" />
     <Compile Include="Implementation\FileSystem\File.cs" />
@@ -59,12 +62,16 @@
     <Compile Include="Implementation\Metadata\MetadataFactory.cs" />
     <Compile Include="Implementation\Metadata\MetadataLoader.cs" />
     <Compile Include="Implementation\Metadata\Track.cs" />
+    <Compile Include="Interfaces\Configuration\IConfigurationLoader.cs" />
+    <Compile Include="Interfaces\Configuration\IConfigurationNode.cs" />
     <Compile Include="Interfaces\FileSystem\IDirectory.cs" />
     <Compile Include="Interfaces\FileSystem\IFile.cs" />
     <Compile Include="Interfaces\FileSystem\IFileSystemLoader.cs" />
     <Compile Include="Interfaces\ICheckable.cs" />
     <Compile Include="Interfaces\IConsistencyChecker.cs" />
     <Compile Include="Interfaces\IFileMapper.cs" />
+    <Compile Include="Interfaces\IVisitor.cs" />
+    <Compile Include="Interfaces\IWrapper.cs" />
     <Compile Include="Interfaces\Output\IOutputWriter.cs" />
     <Compile Include="Interfaces\Metadata\IAlbum.cs" />
     <Compile Include="Interfaces\Metadata\IArtist.cs" />

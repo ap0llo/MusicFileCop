@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model.FileSystem
 {
-    public interface IFile
+    public interface IFile : ICheckable
     {
         IDirectory Directory { get; }
 

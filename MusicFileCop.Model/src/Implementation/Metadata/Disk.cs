@@ -25,5 +25,7 @@ namespace MusicFileCop.Model.Metadata
             m_Tracks.Add(track);
         }
 
+        public void Accept(IVisitor visitor) => visitor.Visit(this);
+
     }
 }

@@ -10,8 +10,8 @@ namespace MusicFileCop.Model.Rules
     {     
         string Description { get; }
 
-        bool IsApplicable(IFileMapper fileMapper, T musicFile);
+        bool IsApplicable(T item);
 
-        bool IsConsistent(IFileMapper fileMapper, T musicFile);
+        bool IsConsistent(T item);
     }
 }

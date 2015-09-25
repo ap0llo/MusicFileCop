@@ -25,6 +25,7 @@ namespace MusicFileCop.Model.Metadata
 
         internal Album GetAlbum(string name, int releaseYear) => m_Albums[new Tuple<string, int>(name, releaseYear)];
 
+        public void Accept(IVisitor visitor) => visitor.Visit(this);
 
         private class TupleComparer : IEqualityComparer<Tuple<string, int>>
         {

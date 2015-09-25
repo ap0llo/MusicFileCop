@@ -1,4 +1,5 @@
-﻿using MusicFileCop.Model.FileSystem;
+﻿using MusicFileCop.Model.Configuration;
+using MusicFileCop.Model.FileSystem;
 using MusicFileCop.Model.Metadata;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,20 @@ namespace MusicFileCop.Model
     {
         void AddMapping(ITrack track, IFile file);
 
+        void AddMapping(IConfigurationNode configurationNode, IDirectory directory);
+
+        void AddMapping(IConfigurationNode configurationNode, IFile file);
+
         ITrack GetTrack(IFile file);
 
         IFile GetFile(ITrack track);
 
         IEnumerable<IDirectory> GetDirectories(IAlbum album);
 
-        IEnumerable<IDirectory> GetDirectories(IDisk disk);        
+        IEnumerable<IDirectory> GetDirectories(IDisk disk);
+    
+        IConfigurationNode GetConfiguration(IDirectory directory);
+
+        IConfigurationNode GetConfiguration(IFile file);
     }
 }

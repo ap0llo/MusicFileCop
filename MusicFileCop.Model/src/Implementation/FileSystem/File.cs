@@ -38,5 +38,9 @@ namespace MusicFileCop.Model.FileSystem
 
         }
 
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

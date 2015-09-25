@@ -29,6 +29,8 @@ namespace MusicFileCop.Model.Metadata
         public bool DiskExists(int diskNumber) => m_Disks.ContainsKey(diskNumber);
 
         public Disk GetDisk(int diskNumber) => m_Disks[diskNumber];
+
+        public void Accept(IVisitor visitor) => visitor.Visit(this);
         
     }
 }

@@ -11,18 +11,24 @@ namespace MusicFileCop.Rules
 {
     class DirectoryNameMatchesArtistName : IRule<IAlbum>
     {
+
+        readonly IFileMapper m_FileMapper;
+
+        public DirectoryNameMatchesArtistName(IFileMapper fileMapper)
+        {
+            if(fileMapper == null)
+            {
+                throw new ArgumentNullException(nameof(fileMapper));
+            }
+            this.m_FileMapper = fileMapper;
+        }
+
+
         public string Description => "All album directories must be contained in directories named the same as the album artist";        
 
-        public bool IsApplicable(IFileMapper fileMapper, IAlbum album) => true;
+        public bool IsApplicable(IAlbum album) => true;
         
-        public bool IsConsistent(IFileMapper fileMapper, IAlbum album)
-        {
-            var albumDirectories = album.Disks.SelectMany(disk => disk.Tracks)
-                                              .Select(fileMapper.GetFile)
-                                              .Select(file => file.Directory)
-                                              .Distinct();
-
-            return albumDirectories.All(dir => dir.Name == album.Name);
-        }
+        public bool IsConsistent(IAlbum album) => m_FileMapper.GetDirectories(album).All(dir => dir.Name == album.Name);
+      
     }
 }

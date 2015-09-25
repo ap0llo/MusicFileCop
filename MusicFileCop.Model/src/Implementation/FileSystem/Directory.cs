@@ -33,7 +33,9 @@ namespace MusicFileCop.Model.FileSystem
         }
 
 
-        public bool FileExists(string nameWithExtension) => m_Files.ContainsKey(nameWithExtension);              
+        public bool FileExists(string nameWithExtension) => m_Files.ContainsKey(nameWithExtension);
+
+        public IFile GetFile(string nameWithExtension) => m_Files[nameWithExtension];
 
         internal void AddFile(IFile file)
         {
@@ -43,6 +45,11 @@ namespace MusicFileCop.Model.FileSystem
         internal void AddDirectory(IDirectory directory)
         {
             this.m_Directories.Add(directory.Name, directory);
+        }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

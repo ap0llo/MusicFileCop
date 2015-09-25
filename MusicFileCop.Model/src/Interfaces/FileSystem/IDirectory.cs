@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model.FileSystem
 {
-    public interface IDirectory
+    public interface IDirectory : ICheckable
     {
         string Name { get; }
 
@@ -18,6 +18,7 @@ namespace MusicFileCop.Model.FileSystem
 
         bool FileExists(string nameWithExtension);
 
+        IFile GetFile(string nameWithExtension);
 
     }
 }

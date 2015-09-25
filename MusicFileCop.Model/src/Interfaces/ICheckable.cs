@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace MusicFileCop.Model
 {
     /// <summary>
-    /// Marker interface to mark a type as object that can be cheked by a rule
+    /// Base interface for all elements that can be checked by a rule
     /// </summary>
     public interface ICheckable
     {
-     
+        void Accept(IVisitor visitor);
+
     }
 }

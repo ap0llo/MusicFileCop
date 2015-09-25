@@ -12,14 +12,26 @@ namespace MusicFileCop.Rules
     public class AlbumDirectoryMustContainCoverFile : IRule<IAlbum>
     {
         private const string s_CoverFileName = "Cover.jpg";
+        private readonly IFileMapper m_FileMapper;
 
-        public string Description => "In Every directory containign a media file, there must be a Cover.jpg file";
-        
-        public bool IsApplicable(IFileMapper fileMapper, IAlbum album) => true;
-        
-        public bool IsConsistent(IFileMapper fileMapper, IAlbum album)
+
+        public AlbumDirectoryMustContainCoverFile(IFileMapper fileMapper)
         {
-            return fileMapper.GetDirectories(album).All(dir => dir.FileExists(s_CoverFileName));
+            if(fileMapper == null)
+            {
+                throw new ArgumentNullException(nameof(fileMapper));
+            }
+            this.m_FileMapper = fileMapper;
+        }
+
+
+        public string Description => "In every directory containig a album, there must be a Cover.jpg file";
+        
+        public bool IsApplicable(IAlbum album) => true;
+        
+        public bool IsConsistent(IAlbum album)
+        {
+            return m_FileMapper.GetDirectories(album).All(dir => dir.FileExists(s_CoverFileName));
         }
     }
 }
