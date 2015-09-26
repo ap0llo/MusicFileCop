@@ -21,7 +21,7 @@ namespace MusicFileCop.Model.Configuration
             }
 
             this.m_ParentNode = parentNode;
-            this.m_Values = values;
+            this.m_Values = values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.InvariantCultureIgnoreCase);
         }
 
 
@@ -35,7 +35,7 @@ namespace MusicFileCop.Model.Configuration
             if(m_Values.ContainsKey(name))
             {
                 var stringValue = m_Values[name];
-                var value = (T) Parse<T>(name);
+                var value = (T) Parse<T>(stringValue);
                 m_ParsedValues.Add(name, value);                
                 return value;
             }                
@@ -58,11 +58,28 @@ namespace MusicFileCop.Model.Configuration
             }
             else if(typeof(T) == typeof(bool))
             {
-                return bool.Parse(value);
+                bool result;
+                if(bool.TryParse(value, out result))
+                {
+                    return result;
+                }
+                else
+                {
+                    throw new ArgumentException($"Value '{value}' cannot be parsed to bool");
+                }                
             }
             else if(typeof(T) == typeof(int))
             {
-                return int.Parse(value);
+                int result;
+
+                if(int.TryParse(value, out result))
+                {
+                    return result;
+                }
+                else
+                {
+                    throw new ArgumentException($"Value '{value}' cannot be parsed to int");
+                }              
             }
             else
             {
