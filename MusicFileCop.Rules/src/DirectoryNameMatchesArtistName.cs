@@ -12,9 +12,9 @@ namespace MusicFileCop.Rules
     class DirectoryNameMatchesArtistName : IRule<IAlbum>
     {
 
-        readonly IFileMapper m_FileMapper;
+        readonly IMapper m_FileMapper;
 
-        public DirectoryNameMatchesArtistName(IFileMapper fileMapper)
+        public DirectoryNameMatchesArtistName(IMapper fileMapper)
         {
             if(fileMapper == null)
             {

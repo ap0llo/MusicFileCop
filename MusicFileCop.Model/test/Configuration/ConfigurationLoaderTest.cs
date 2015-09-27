@@ -31,7 +31,7 @@ namespace MusicFileCop.Model.Test.Configuration
 
             var fileMock = MockFile("Irrelevant", filePath, null);
             
-            var configurationLoader = new ConfigurationLoader(new FileMapper(), MockConfigurationNode().Object);
+            var configurationLoader = new ConfigurationLoader(new Mapper(), MockConfigurationNode().Object);
             var configNode = configurationLoader.LoadConfigurationFile(fileMock.Object);
 
             Assert.Equal("SomeValue", configNode.Get("SomeKey"));
@@ -55,7 +55,7 @@ namespace MusicFileCop.Model.Test.Configuration
             var configFileMock = MockFile("file.ext.MusicFileCop.json", filePath, directory);            
             directory.AddFile(configFileMock.Object);
                       
-            var fileMapper = new FileMapper();
+            var fileMapper = new Mapper();
 
             var configurationLoader = new ConfigurationLoader(fileMapper, MockConfigurationNode().Object);
             configurationLoader.LoadConfiguration(MockConfigurationNode().Object, fileMock.Object);
@@ -81,7 +81,7 @@ namespace MusicFileCop.Model.Test.Configuration
             var configFileMock = MockFile("MusicFileCop.json", filePath, directory);
             directory.AddFile(configFileMock.Object);
 
-            var fileMapper = new FileMapper();
+            var fileMapper = new Mapper();
 
             var configurationLoader = new ConfigurationLoader(fileMapper, MockConfigurationNode().Object);
             configurationLoader.LoadConfiguration(MockConfigurationNode().Object, directory);
@@ -108,7 +108,7 @@ namespace MusicFileCop.Model.Test.Configuration
             directory.AddFile(fileMock.Object);
 
             
-            var fileMapper = new FileMapper();
+            var fileMapper = new Mapper();
                        
             var configurationLoader = new ConfigurationLoader(fileMapper, MockConfigurationNode().Object);
             configurationLoader.LoadConfiguration(MockConfigurationNode().Object, directory);

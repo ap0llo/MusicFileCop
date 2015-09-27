@@ -11,11 +11,11 @@ namespace MusicFileCop.Model
 {
     class ConsistencyChecker : IConsistencyChecker, IVisitor
     {
-        readonly IFileMapper m_FileMapper;
+        readonly IMapper m_FileMapper;
         readonly IOutputWriter m_OutputWriter;
 
 
-        public ConsistencyChecker(IFileMapper fileMapper, IOutputWriter outputWriter)
+        public ConsistencyChecker(IMapper fileMapper, IOutputWriter outputWriter)
         {
             if (fileMapper == null)
                 throw new ArgumentNullException(nameof(fileMapper));

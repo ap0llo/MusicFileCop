@@ -11,9 +11,9 @@ namespace MusicFileCop.Rules
 {
     class SingleDiskFileName : IRule<ITrack>
     {
-        readonly IFileMapper m_FileMapper;
+        readonly IMapper m_FileMapper;
 
-        public SingleDiskFileName(IFileMapper fileMapper)
+        public SingleDiskFileName(IMapper fileMapper)
         {
             if (fileMapper == null)
             {

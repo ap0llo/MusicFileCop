@@ -93,7 +93,7 @@
     <Compile Include="Interfaces\FileSystem\IFileSystemLoader.cs" />
     <Compile Include="Interfaces\ICheckable.cs" />
     <Compile Include="Interfaces\IConsistencyChecker.cs" />
-    <Compile Include="Interfaces\IFileMapper.cs" />
+    <Compile Include="Interfaces\IMapper.cs" />
     <Compile Include="Interfaces\IVisitor.cs" />
     <Compile Include="Interfaces\IWrapper.cs" />
     <Compile Include="Interfaces\Output\IOutputWriter.cs" />

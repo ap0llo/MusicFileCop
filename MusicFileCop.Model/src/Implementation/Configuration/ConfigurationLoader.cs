@@ -16,10 +16,10 @@ namespace MusicFileCop.Model.Configuration
         const string s_DirectoryConfigName = "MusicFileCop.json";
         const string s_FileConfigName = "{0}.MusicFileCop.json";
 
-        readonly IFileMapper m_FileMapper;
+        readonly IMapper m_FileMapper;
         readonly IConfigurationNode m_DefaultConfiguration;
 
-        public ConfigurationLoader(IFileMapper fileMapper, IConfigurationNode defaultConfiguration)
+        public ConfigurationLoader(IMapper fileMapper, IConfigurationNode defaultConfiguration)
         {
             if(fileMapper == null)
             {

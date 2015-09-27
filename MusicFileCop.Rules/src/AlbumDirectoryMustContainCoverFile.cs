@@ -12,10 +12,10 @@ namespace MusicFileCop.Rules
     public class AlbumDirectoryMustContainCoverFile : IRule<IAlbum>
     {
         private const string s_CoverFileName = "Cover.jpg";
-        private readonly IFileMapper m_FileMapper;
+        private readonly IMapper m_FileMapper;
 
 
-        public AlbumDirectoryMustContainCoverFile(IFileMapper fileMapper)
+        public AlbumDirectoryMustContainCoverFile(IMapper fileMapper)
         {
             if(fileMapper == null)
             {

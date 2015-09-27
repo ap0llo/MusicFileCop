@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model
 {
-    public interface IFileMapper
+    public interface IMapper
     {
         void AddMapping(ITrack track, IFile file);
 

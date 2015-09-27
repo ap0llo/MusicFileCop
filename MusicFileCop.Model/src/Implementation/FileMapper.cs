@@ -7,9 +7,9 @@ using MusicFileCop.Model.FileSystem;
 using MusicFileCop.Model.Metadata;
 using MusicFileCop.Model.Configuration;
 
-namespace MusicFileCop.Model.Implementation
+namespace MusicFileCop.Model
 {
-    class FileMapper : IFileMapper
+    class Mapper : IMapper
     {
         //TODO: Use "doublesided dictionary"
         readonly IDictionary<IFile, ITrack> m_FileToTrackMapping = new Dictionary<IFile, ITrack>();

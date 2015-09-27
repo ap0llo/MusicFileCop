@@ -13,9 +13,9 @@ namespace MusicFileCop.Model.Metadata
     {
         static readonly ISet<string> s_MusicFileExtensions = new HashSet<string>(new[] { ".mp3" }, StringComparer.InvariantCultureIgnoreCase);
         readonly IMetadataFactory m_MetadataFactory;
-        readonly IFileMapper m_FileMapper;
+        readonly IMapper m_FileMapper;
 
-        public MetaDataLoader(IMetadataFactory metadataFactory, IFileMapper fileMapper)
+        public MetaDataLoader(IMetadataFactory metadataFactory, IMapper fileMapper)
         {
             if(metadataFactory == null)
                 throw new ArgumentNullException(nameof(metadataFactory));

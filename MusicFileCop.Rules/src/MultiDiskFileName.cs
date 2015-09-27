@@ -12,9 +12,9 @@ namespace MusicFileCop.Rules
     public class MultiDiskFileName : IRule<ITrack>
     {
 
-        readonly IFileMapper m_FileMapper;
+        readonly IMapper m_FileMapper;
 
-        public MultiDiskFileName(IFileMapper fileMapper)
+        public MultiDiskFileName(IMapper fileMapper)
         {
             if (fileMapper == null)
             {
