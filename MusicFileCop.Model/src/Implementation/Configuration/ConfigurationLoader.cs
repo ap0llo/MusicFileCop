@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MusicFileCop.Model.FileSystem;
+using Microsoft.Framework.ConfigurationModel;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace MusicFileCop.Model.Configuration
 {
@@ -26,12 +30,15 @@ namespace MusicFileCop.Model.Configuration
             this.m_DefaultConfiguration = defaultConfiguration;
         }
 
+
+
         public void LoadConfiguration(IDirectory directory)
         {
             LoadConfiguration(m_DefaultConfiguration, directory);           
         }
 
-        void LoadConfiguration(IConfigurationNode parentNode, IDirectory directory)
+
+        internal void LoadConfiguration(IConfigurationNode parentNode, IDirectory directory)
         {
             IConfigurationNode configNode;
             if (directory.FileExists(s_DirectoryConfigName))
@@ -56,7 +63,7 @@ namespace MusicFileCop.Model.Configuration
             }
         }
 
-        void LoadConfiguration(IConfigurationNode parentNode, IFile file)
+        internal void LoadConfiguration(IConfigurationNode parentNode, IFile file)
         {
             var configFileName = String.Format(s_FileConfigName, file.NameWithExtension);
 
@@ -73,10 +80,17 @@ namespace MusicFileCop.Model.Configuration
             m_FileMapper.AddMapping(configNode, file);
         }
 
-        IDictionary<string, string> LoadConfigurationFile(IFile configFile)
+        internal IConfiguration LoadConfigurationFile(IFile configFile)
         {
-            throw new NotImplementedException();
+            var configuration = new Microsoft.Framework.ConfigurationModel.Configuration();
+            configuration.AddJsonFile(configFile.FullPath);
+
+            return configuration;
         }
+        
+        
+
+     
 
     }
 }

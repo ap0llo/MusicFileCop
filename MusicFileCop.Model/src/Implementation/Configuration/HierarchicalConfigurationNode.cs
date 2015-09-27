@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Framework.ConfigurationModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +10,22 @@ namespace MusicFileCop.Model.Configuration
     class HierarchicalConfigurationNode : IConfigurationNode
     {
         readonly IConfigurationNode m_ParentNode;
-        readonly IDictionary<string, string> m_Values;
+        readonly IConfiguration m_Configuration;
         readonly IDictionary<string, object> m_ParsedValues = new Dictionary<string, object>();
 
 
-        public HierarchicalConfigurationNode(IConfigurationNode parentNode, IDictionary<string, string> values) 
+        public HierarchicalConfigurationNode(IConfigurationNode parentNode, IConfiguration configuration) 
         {                      
-            if(values == null)
+            if(configuration == null)
             {
-                throw new ArgumentNullException(nameof(values));
+                throw new ArgumentNullException(nameof(configuration));
             }
 
             this.m_ParentNode = parentNode;
-            this.m_Values = values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.InvariantCultureIgnoreCase);
+            this.m_Configuration = configuration;
         }
 
+        public string GetValue(string settingsId) => GetValue<string>(settingsId);
 
         public T GetValue<T>(string name)
         {
@@ -31,10 +33,10 @@ namespace MusicFileCop.Model.Configuration
             {
                 return (T) m_ParsedValues[name];
             }
-            
-            if(m_Values.ContainsKey(name))
+
+            string stringValue;
+            if (m_Configuration.TryGet(name, out stringValue))            
             {
-                var stringValue = m_Values[name];
                 var value = (T) Parse<T>(stringValue);
                 m_ParsedValues.Add(name, value);                
                 return value;
@@ -86,6 +88,8 @@ namespace MusicFileCop.Model.Configuration
                 throw new NotSupportedException($"Type '{typeof(T)}' is not supported");
             }
         }
+
+      
 
     }
 }

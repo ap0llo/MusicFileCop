@@ -8,6 +8,8 @@ namespace MusicFileCop.Model.Configuration
 {
     public interface IConfigurationNode
     {
+        string GetValue(string settingsId); 
+
         T GetValue<T>(string settingsId);   
     }
 }

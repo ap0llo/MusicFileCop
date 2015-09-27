@@ -37,3 +37,4 @@ using System.Runtime.InteropServices;
 
 
 [assembly:InternalsVisibleTo("MusicFileCop.Model.Test")]
+[assembly:InternalsVisibleTo("DynamicProxyGenAssembly2")]
