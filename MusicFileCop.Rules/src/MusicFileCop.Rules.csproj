@@ -41,12 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryMatchesAlbumName.cs" />
-    <Compile Include="AlbumDirectoryMustContainCoverFile.cs" />
-    <Compile Include="DirectoryNameMatchesArtistName.cs" />
-    <Compile Include="MultiDiskFileName.cs" />
+    <Compile Include="Rules\DirectoryMatchesAlbumName.cs" />
+    <Compile Include="Rules\AlbumDirectoryMustContainCoverFile.cs" />
+    <Compile Include="Rules\DirectoryNameMatchesArtistName.cs" />
+    <Compile Include="Rules\MultiDiskFileName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SingleDiskFileName.cs" />
+    <Compile Include="Rules\SingleDiskFileName.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MusicFileCop.Model\src\MusicFileCop.Model.csproj">

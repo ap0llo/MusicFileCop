@@ -1,7 +1,6 @@
 ﻿using Moq;
 using MusicFileCop.Model.Configuration;
 using MusicFileCop.Model.FileSystem;
-using MusicFileCop.Model.Implementation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

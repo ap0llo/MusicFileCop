@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicFileCop.Model.Implementation.Metadata
+namespace MusicFileCop.Model.Metadata
 {
     class MetadataFactory : IMetadataFactory
     {

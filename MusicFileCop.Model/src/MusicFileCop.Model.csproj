@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DI\ModelModule.cs" />
     <Compile Include="Implementation\Configuration\ConfigurationLoader.cs" />
     <Compile Include="Implementation\Configuration\HierarchicalConfigurationNode.cs" />
     <Compile Include="Implementation\ConsistencyChecker.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Interfaces\IConsistencyChecker.cs" />
     <Compile Include="Interfaces\IMapper.cs" />
     <Compile Include="Interfaces\IVisitor.cs" />
-    <Compile Include="Interfaces\IWrapper.cs" />
     <Compile Include="Interfaces\Output\IOutputWriter.cs" />
     <Compile Include="Interfaces\Metadata\IAlbum.cs" />
     <Compile Include="Interfaces\Metadata\IArtist.cs" />
