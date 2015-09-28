@@ -1,6 +1,7 @@
 ﻿using MusicFileCop.Model.Configuration;
 using MusicFileCop.Model.FileSystem;
 using MusicFileCop.Model.Metadata;
+using MusicFileCop.Model.Output;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace MusicFileCop.Model.DI
             this.Bind<IFileSystemLoader>().To<FileSystemLoader>();
             this.Bind<IMetadataLoader>().To<MetaDataLoader>();
             this.Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
+            this.Bind<IOutputWriter>().To<OutputWriter>();
 
         }
     }

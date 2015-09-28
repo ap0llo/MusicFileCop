@@ -1,33 +1,50 @@
-﻿using Ninject.Modules;
+﻿using MusicFileCop.Model;
+using MusicFileCop.Model.DI;
+using MusicFileCop.Model.Metadata;
+using MusicFileCop.Model.Rules;
+using MusicFileCop.Rules;
+using Ninject;
 using Ninject.Extensions.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using MusicFileCop.Model.Rules;
-using MusicFileCop.Model;
-using System.Reflection;
-using MusicFileCop.Model.DI;
 
-namespace MusicFileCop.Rules.DI
+namespace MusicFileCop
 {
-    public class RulesModule : NinjectModule
-    {        
-        const string s_RulesAssemblyName = "MusicFileCop.Rules";
+    class RuleLoader
+    {
+        const string s_RulesAssemblyName = "MusicFileCop.Rules.dll";
 
-        public override void Load()
+        readonly IKernel m_Kernel;
+
+
+        public RuleLoader(IKernel kernel)
         {
+            if (kernel == null)
+                throw new ArgumentNullException(nameof(kernel));
+
+            m_Kernel = kernel;
+        }
+
+
+
+        public void LoadAllRules()
+        {
+
             // get all checkables
             var ruleTypes = GetCheckableTypes()
                 .Select(checkableType => typeof(IRule<>).MakeGenericType(checkableType))
                 .ToArray();
 
-            this.Kernel.Bind(x =>
+            m_Kernel.Bind(x =>
                 x.FromAssembliesMatching(s_RulesAssemblyName)
                 .SelectAllClasses()
                 .InheritedFromAny(ruleTypes)
-                .BindToSelf());
+                .BindAllInterfaces());
+            
         }
 
 
@@ -40,5 +57,7 @@ namespace MusicFileCop.Rules.DI
                 .Where(t => typeof(ICheckable).IsAssignableFrom(t))
                 .Where(t => t.IsPublic);
         }
+
+
     }
 }

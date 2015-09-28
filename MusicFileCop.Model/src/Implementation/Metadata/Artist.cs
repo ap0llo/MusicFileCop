@@ -27,17 +27,20 @@ namespace MusicFileCop.Model.Metadata
 
         public void Accept(IVisitor visitor) => visitor.Visit(this);
 
+
+
         private class TupleComparer : IEqualityComparer<Tuple<string, int>>
         {
 
             public bool Equals(Tuple<string, int> x, Tuple<string, int> y)
             {
-                throw new NotImplementedException();
+                return StringComparer.InvariantCultureIgnoreCase.Equals(x.Item1, y.Item1) &&
+                    x.Item2 == y.Item2;
             }
 
             public int GetHashCode(Tuple<string, int> obj)
             {
-                throw new NotImplementedException();
+                return StringComparer.InvariantCultureIgnoreCase.GetHashCode(obj.Item1);
             }
         }
     }

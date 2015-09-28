@@ -13,7 +13,7 @@ namespace MusicFileCop.DI
         public override void Load()
         {
             this.Bind<MusicFileCop>().ToSelf();
-            this.Bind<IKernel>().ToConstant(this.KernelInstance);
+            this.Bind<RuleLoader>().ToSelf();
         }
     }
 }

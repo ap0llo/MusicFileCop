@@ -1,7 +1,9 @@
-﻿using MusicFileCop.Model;
+﻿using Moq;
+using MusicFileCop.DI;
+using MusicFileCop.Model;
 using MusicFileCop.Model.FileSystem;
 using MusicFileCop.Model.Metadata;
-using MusicFileCop.Rules.DI;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,14 @@ using Xunit;
 namespace MusicFileCop.Test
 {
 
-    public class RulesModuleTest : IDisposable
+    public class RuleLoaderTest : IDisposable
     {
+        readonly Mock<IKernel> m_KernelMock = new Mock<IKernel>(MockBehavior.Strict);
+        RuleLoader m_Instance;
 
-        RulesModule m_Instance;
-
-        public RulesModuleTest()
-        {
-            this.m_Instance = new RulesModule();
+        public RuleLoaderTest()
+        {            
+            this.m_Instance = new RuleLoader(m_KernelMock.Object);
         }
 
         public void Dispose()

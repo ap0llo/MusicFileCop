@@ -8,6 +8,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using Ninject;
 
 namespace MusicFileCop.Model.Configuration
 {
@@ -18,6 +19,12 @@ namespace MusicFileCop.Model.Configuration
 
         readonly IMapper m_FileMapper;
         readonly IConfigurationNode m_DefaultConfiguration;
+
+        [Inject]
+        public ConfigurationLoader(IMapper fileMapper) : this(fileMapper, null)
+        {
+
+        }
 
         public ConfigurationLoader(IMapper fileMapper, IConfigurationNode defaultConfiguration)
         {
@@ -59,7 +66,7 @@ namespace MusicFileCop.Model.Configuration
 
             foreach (var dir in directory.Directories)
             {
-                LoadConfiguration(configNode, directory);
+                LoadConfiguration(configNode, dir);
             }
         }
 

@@ -21,5 +21,9 @@ namespace MusicFileCop.Model.Metadata
         public int TrackNumber { get; internal set; }
 
         public void Accept(IVisitor visitor) => visitor.Visit(this);
+
+
+        public override string ToString() => $"[Track '{Artist.Name} - {Name}']";
+        
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="Implementation\Metadata\MetadataFactory.cs" />
     <Compile Include="Implementation\Metadata\MetadataLoader.cs" />
     <Compile Include="Implementation\Metadata\Track.cs" />
+    <Compile Include="Implementation\Output\ConsoleOutputWriter.cs" />
     <Compile Include="Interfaces\Configuration\IConfigurationLoader.cs" />
     <Compile Include="Interfaces\Configuration\IConfigurationNode.cs" />
     <Compile Include="Interfaces\FileSystem\IDirectory.cs" />

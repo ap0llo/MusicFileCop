@@ -16,9 +16,9 @@ namespace MusicFileCop.Model.Metadata
 
         private Artist GetArtistInternal(string name)
         {
-            if(String.IsNullOrEmpty(name))
+            if(name == null)
             {
-                return null;
+                name = String.Empty;
             }
 
             if(!m_Artists.ContainsKey(name))
@@ -36,11 +36,11 @@ namespace MusicFileCop.Model.Metadata
 
         private Album GetAlbumInternal(string albumArtist, string albumName, int releaseYear)
         {
-            var artist = GetArtistInternal(albumArtist);
+            var artist = GetArtistInternal(albumArtist);          
 
-            if(artist == null || String.IsNullOrEmpty(albumName))
+            if(albumName == null)
             {
-                return null;
+                albumName = String.Empty;
             }
 
             if(!artist.AlbumExists(albumName, releaseYear))

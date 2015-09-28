@@ -33,6 +33,7 @@ namespace MusicFileCop.Model.Metadata
             {
                 if(s_MusicFileExtensions.Contains(file.Extension))
                 {
+                    LoadMetadata(file);
                 }
             }
 

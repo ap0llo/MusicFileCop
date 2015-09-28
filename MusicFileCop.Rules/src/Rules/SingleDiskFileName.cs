@@ -9,7 +9,7 @@ using MusicFileCop.Model;
 
 namespace MusicFileCop.Rules
 {
-    class SingleDiskFileName : IRule<ITrack>
+    public class SingleDiskFileName : IRule<ITrack>
     {
         readonly IMapper m_FileMapper;
 
@@ -26,8 +26,19 @@ namespace MusicFileCop.Rules
         public string Description => @"For albums that only have a single disk, the filename matches the format '{TRACKNUMBER}- {TITLE}'";               
 
         public bool IsApplicable(ITrack track) => track.Album.Disks.Count() == 1;
-        
-        public bool IsConsistent(ITrack track) => m_FileMapper.GetFile(track).Name == $"{track.TrackNumber} - {track.Name}";
+
+        public bool IsConsistent(ITrack track)
+        {
+            var expectedFileName = $"{track.TrackNumber:D2} - {track.Name}";
+            var actualFileName = m_FileMapper.GetFile(track).Name;
+
+            if(expectedFileName != actualFileName)
+            {
+                
+            }
+
+            return expectedFileName == actualFileName;
+        }
 
     }
 }

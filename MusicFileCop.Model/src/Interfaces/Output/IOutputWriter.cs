@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicFileCop.Model
+namespace MusicFileCop.Model.Output
 {
     public interface IOutputWriter
     {

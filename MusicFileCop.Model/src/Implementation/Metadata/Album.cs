@@ -14,7 +14,7 @@ namespace MusicFileCop.Model.Metadata
 
         public IArtist Artist { get; internal set; }
 
-        public IEnumerable<IDisk> Disks => Disks;
+        public IEnumerable<IDisk> Disks => m_Disks.Values;
         
         public string Name { get; internal set; }
 
@@ -31,6 +31,9 @@ namespace MusicFileCop.Model.Metadata
         public Disk GetDisk(int diskNumber) => m_Disks[diskNumber];
 
         public void Accept(IVisitor visitor) => visitor.Visit(this);
+
+
+        public override string ToString() => $"[Album '{Name}' (Artist = '{Artist.Name}')]";
         
     }
 }

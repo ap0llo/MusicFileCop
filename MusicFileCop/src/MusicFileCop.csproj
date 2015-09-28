@@ -73,10 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\MainModule.cs" />
-    <Compile Include="DI\RulesModule.cs" />
     <Compile Include="MusicFileCop.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -94,6 +94,10 @@
     <ProjectReference Include="..\..\MusicFileCop.Model\src\MusicFileCop.Model.csproj">
       <Project>{653410f1-5d93-4f0e-8b8a-63b1b21ae3d4}</Project>
       <Name>MusicFileCop.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MusicFileCop.Rules\src\MusicFileCop.Rules.csproj">
+      <Project>{0cc834bd-82c6-444f-806d-e4310d15872a}</Project>
+      <Name>MusicFileCop.Rules</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
