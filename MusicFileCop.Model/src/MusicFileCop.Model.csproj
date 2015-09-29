@@ -76,6 +76,7 @@
     <Compile Include="DI\ModelModule.cs" />
     <Compile Include="Implementation\Configuration\ConfigurationLoader.cs" />
     <Compile Include="Implementation\Configuration\HierarchicalConfigurationNode.cs" />
+    <Compile Include="Implementation\Configuration\PrefixConfigurationNode.cs" />
     <Compile Include="Implementation\ConsistencyChecker.cs" />
     <Compile Include="Implementation\FileMapper.cs" />
     <Compile Include="Implementation\FileSystem\Directory.cs" />

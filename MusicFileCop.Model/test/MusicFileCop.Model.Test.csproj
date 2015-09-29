@@ -81,6 +81,7 @@
     <Compile Include="Configuration\ConfigurationLoaderTest.cs" />
     <Compile Include="Configuration\Helpers\ConfigurationMockHelper.cs" />
     <Compile Include="Configuration\HierarchicalConfigurationNodeTest.cs" />
+    <Compile Include="Configuration\PrefixConfigurationNodeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

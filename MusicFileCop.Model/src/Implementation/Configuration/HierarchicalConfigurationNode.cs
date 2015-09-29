@@ -25,7 +25,7 @@ namespace MusicFileCop.Model.Configuration
             this.m_Configuration = configuration;
         }
 
-        public string GetValue(string settingsId) => GetValue<string>(settingsId);
+        public string GetValue(string name) => GetValue<string>(name);
 
         public T GetValue<T>(string name)
         {
