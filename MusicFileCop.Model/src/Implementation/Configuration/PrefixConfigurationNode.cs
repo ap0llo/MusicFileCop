@@ -39,6 +39,6 @@ namespace MusicFileCop.Model.Configuration
         public T GetValue<T>(string name) => m_WrappedConfigurationNode.GetValue<T>(GetPrefixedName(name));
 
 
-        string GetPrefixedName(string name) => $"{m_Prefix}:{name}";
+        protected string GetPrefixedName(string name) => $"{m_Prefix}:{name}";
     }
 }
