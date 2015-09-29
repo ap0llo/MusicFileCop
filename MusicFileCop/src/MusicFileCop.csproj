@@ -76,7 +76,6 @@
     <Compile Include="MusicFileCop.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RuleLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

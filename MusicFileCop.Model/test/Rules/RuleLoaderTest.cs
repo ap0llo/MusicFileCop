@@ -1,18 +1,14 @@
-﻿using Moq;
-using MusicFileCop.DI;
-using MusicFileCop.Model;
-using MusicFileCop.Model.FileSystem;
-using MusicFileCop.Model.Metadata;
-using Ninject;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Moq;
+using MusicFileCop.Model.FileSystem;
+using MusicFileCop.Model.Metadata;
+using MusicFileCop.Model.Rules;
+using Ninject;
 using Xunit;
 
-namespace MusicFileCop.Test
+namespace MusicFileCop.Model.Test.Rules
 {
 
     public class RuleLoaderTest : IDisposable

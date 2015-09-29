@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MusicFileCop.Model.Rules;
 
 namespace MusicFileCop.Model.DI
 {
@@ -22,7 +23,7 @@ namespace MusicFileCop.Model.DI
             this.Bind<IMetadataLoader>().To<MetaDataLoader>();
             this.Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
             this.Bind<IOutputWriter>().To<OutputWriter>();
-
+            this.Bind<IRuleLoader>().To<RuleLoader>();
         }
     }
 }

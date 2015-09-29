@@ -24,7 +24,7 @@ namespace MusicFileCop
             //get instance of Program using ninject
             using (var kernel = new StandardKernel(new MainModule(), new ModelModule()))
             {
-                var ruleLoader = kernel.Get<RuleLoader>();
+                var ruleLoader = kernel.Get<IRuleLoader>();
                 ruleLoader.LoadAllRules();
 
                 var program = kernel.Get<MusicFileCop>();

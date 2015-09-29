@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MusicFileCop.Model;
 using MusicFileCop.Model.DI;
-using MusicFileCop.Model.Rules;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Extensions.Conventions;
 using Ninject.Parameters;
 
-namespace MusicFileCop
+namespace MusicFileCop.Model.Rules
 {
-    class RuleLoader
+    class RuleLoader : IRuleLoader
     {
         const string s_RulesAssemblyName = "MusicFileCop.Rules.dll";
 
