@@ -9,7 +9,7 @@ using MusicFileCop.Model;
 
 namespace MusicFileCop.Rules
 {
-    class DirectoryNameMatchesArtistName : IRule<IAlbum>
+    public class DirectoryNameMatchesArtistName : IRule<IAlbum>
     {
 
         readonly IMapper m_FileMapper;
