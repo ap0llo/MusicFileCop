@@ -78,7 +78,7 @@
     <Compile Include="Implementation\Configuration\HierarchicalConfigurationNode.cs" />
     <Compile Include="Implementation\Configuration\PrefixConfigurationNode.cs" />
     <Compile Include="Implementation\ConsistencyChecker.cs" />
-    <Compile Include="Implementation\FileMapper.cs" />
+    <Compile Include="Implementation\Mapper.cs" />
     <Compile Include="Implementation\FileSystem\Directory.cs" />
     <Compile Include="Implementation\FileSystem\File.cs" />
     <Compile Include="Implementation\FileSystem\FileSystemLoader.cs" />
