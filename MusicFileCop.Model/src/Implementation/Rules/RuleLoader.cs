@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MusicFileCop.Model.Configuration;
 using MusicFileCop.Model.DI;
 using Ninject;
 using Ninject.Activation;
@@ -47,9 +48,12 @@ namespace MusicFileCop.Model.Rules
 
             foreach (var type in ruleImplementingTypes)
             {
-                m_Kernel.Bind<IMapper>()
-                    .ToMethod(c => GetMapperForRule(c, type))
-                    .WhenInjectedInto(type);
+                if (type.GetCustomAttribute<ConfigurationNamespaceAttribute>() != null)
+                {
+                    m_Kernel.Bind<IMapper>()
+                        .ToMethod(c => GetMapperForRule(c, type))
+                        .WhenInjectedInto(type);                    
+                }
             }
         }
 
@@ -66,8 +70,10 @@ namespace MusicFileCop.Model.Rules
 
         IMapper GetMapperForRule(IContext context, Type ruleImplemetationType)
         {
+            var configurationNamespace = ruleImplemetationType.GetCustomAttribute<ConfigurationNamespaceAttribute>().Namespace;
+
             return context.Kernel.Get<PrefixConfigurationMapper>(
-                new ConstructorArgument("settingsPrefix", ruleImplemetationType.Name)
+                new ConstructorArgument("settingsPrefix", configurationNamespace)
                 );
         }
     }
