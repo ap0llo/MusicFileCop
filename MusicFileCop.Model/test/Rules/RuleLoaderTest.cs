@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Moq;
+using MusicFileCop.Model.Configuration;
 using MusicFileCop.Model.FileSystem;
 using MusicFileCop.Model.Metadata;
 using MusicFileCop.Model.Rules;
@@ -18,7 +19,7 @@ namespace MusicFileCop.Model.Test.Rules
 
         public RuleLoaderTest()
         {            
-            this.m_Instance = new RuleLoader(m_KernelMock.Object);
+            this.m_Instance = new RuleLoader(m_KernelMock.Object, new MutableConfigurationNode());
         }
 
         public void Dispose()

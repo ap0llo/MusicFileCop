@@ -39,7 +39,8 @@ namespace MusicFileCop.Rules
         {            
             return m_FileMapper.GetDirectories(album).All(dir =>
             {
-                var coverFileName = m_FileMapper.GetConfiguration(dir).GetValue(AlbumDirectoryCoverFileConstants.CoverFileSettingName);
+                var configurationNode = m_FileMapper.GetConfiguration(dir);
+                var coverFileName = configurationNode.GetValue(AlbumDirectoryCoverFileConstants.CoverFileSettingName);
                 return dir.FileExists(coverFileName);
             });
         }

@@ -8,6 +8,11 @@ namespace MusicFileCop.Model.Configuration
     {
         readonly IDictionary<string, string> m_Values = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
+        public MutableConfigurationNode()
+        {
+            
+        }
+
 
 
         public void AddValue<T>(string name, T value)

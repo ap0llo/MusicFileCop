@@ -16,14 +16,21 @@ namespace MusicFileCop.Model.Rules
         const string s_RulesAssemblyName = "MusicFileCop.Rules.dll";
 
         readonly IKernel m_Kernel;
+        readonly IMutableConfigurationNode m_DefaultConfigurationNode;
 
-
-        public RuleLoader(IKernel kernel)
+        public RuleLoader(IKernel kernel, IMutableConfigurationNode defaultConfigurationNode)
         {
             if (kernel == null)
-                throw new ArgumentNullException(nameof(kernel));
+            {
+                throw new ArgumentNullException(nameof(kernel));                
+            }
+            if (defaultConfigurationNode == null)
+            {
+                throw new ArgumentNullException(nameof(defaultConfigurationNode));
+            }
 
             m_Kernel = kernel;
+            m_DefaultConfigurationNode = defaultConfigurationNode;
         }
 
 
@@ -55,6 +62,22 @@ namespace MusicFileCop.Model.Rules
                         .WhenInjectedInto(type);                    
                 }
             }
+
+            m_Kernel.Bind(x =>
+                x.FromAssembliesMatching(s_RulesAssemblyName)
+                    .SelectAllClasses()
+                    .InheritedFrom<IDefaultConfigurationProvider>()
+                    .BindAllInterfaces());
+
+
+            var defaultConfigurations = m_Kernel.GetAll<IDefaultConfigurationProvider>();
+
+            foreach (var configProvider in defaultConfigurations)
+            {             
+                var wrapper = new PrefixMutableConfigurationNode(m_DefaultConfigurationNode, configProvider.ConfigurationNamespace);
+                configProvider.Configure(wrapper);      
+            }
+
         }
 
 

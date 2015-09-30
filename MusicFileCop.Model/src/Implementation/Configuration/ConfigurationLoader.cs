@@ -20,11 +20,6 @@ namespace MusicFileCop.Model.Configuration
         readonly IMapper m_FileMapper;
         readonly IConfigurationNode m_DefaultConfiguration;
 
-        [Inject]
-        public ConfigurationLoader(IMapper fileMapper) : this(fileMapper, null)
-        {
-
-        }
 
         public ConfigurationLoader(IMapper fileMapper, IConfigurationNode defaultConfiguration)
         {

@@ -178,11 +178,11 @@ namespace MusicFileCop.Model
         {
             if (!m_RulesInstanceCache.ContainsKey(typeof (T)))
             {
-                var rules = m_Kernel.GetAll<IRule<T>>();
-                m_RulesInstanceCache.Add(typeof (T), rules);
+                var rules = m_Kernel.GetAll<IRule<T>>().ToArray();
+                m_RulesInstanceCache.Add(typeof(T), rules);
             }
 
-            return m_RulesInstanceCache[typeof (T)].Cast<IRule<T>>();
+            return m_RulesInstanceCache[typeof(T)].Cast<IRule<T>>();
         }
 
 
