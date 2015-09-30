@@ -23,12 +23,12 @@ namespace MusicFileCop.Model.DI
             this.Bind<IMetadataLoader>().To<MetaDataLoader>();
             this.Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
             this.Bind<IOutputWriter>().To<OutputWriter>();
-            this.Bind<IRuleLoader>().To<RuleLoader>();
+            this.Bind<IDynamicConfigurator>().To<DynamicConfigurator>();
 
             var defaultConfigNode = new MutableConfigurationNode();            
 
             this.Bind<IConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<ConfigurationLoader>();
-            this.Bind<IMutableConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<RuleLoader>();
+            this.Bind<IMutableConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<DynamicConfigurator>();
         }
 
     }

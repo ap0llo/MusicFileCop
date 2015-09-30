@@ -4,21 +4,22 @@ using System.Linq;
 using System.Reflection;
 using MusicFileCop.Model.Configuration;
 using MusicFileCop.Model.DI;
+using MusicFileCop.Model.Rules;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Extensions.Conventions;
 using Ninject.Parameters;
 
-namespace MusicFileCop.Model.Rules
+namespace MusicFileCop.Model
 {
-    class RuleLoader : IRuleLoader
+    class DynamicConfigurator : IDynamicConfigurator
     {
         const string s_RulesAssemblyName = "MusicFileCop.Rules.dll";
 
         readonly IKernel m_Kernel;
         readonly IMutableConfigurationNode m_DefaultConfigurationNode;
 
-        public RuleLoader(IKernel kernel, IMutableConfigurationNode defaultConfigurationNode)
+        public DynamicConfigurator(IKernel kernel, IMutableConfigurationNode defaultConfigurationNode)
         {
             if (kernel == null)
             {

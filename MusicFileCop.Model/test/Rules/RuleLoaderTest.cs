@@ -15,11 +15,11 @@ namespace MusicFileCop.Model.Test.Rules
     public class RuleLoaderTest : IDisposable
     {
         readonly Mock<IKernel> m_KernelMock = new Mock<IKernel>(MockBehavior.Strict);
-        RuleLoader m_Instance;
+        DynamicConfigurator m_Instance;
 
         public RuleLoaderTest()
         {            
-            this.m_Instance = new RuleLoader(m_KernelMock.Object, new MutableConfigurationNode());
+            this.m_Instance = new DynamicConfigurator(m_KernelMock.Object, new MutableConfigurationNode());
         }
 
         public void Dispose()

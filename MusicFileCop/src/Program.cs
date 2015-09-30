@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MusicFileCop.Model;
 using TagLib;
 using TagLib.Mpeg;
 
@@ -24,7 +25,7 @@ namespace MusicFileCop
             //get instance of Program using ninject
             using (var kernel = new StandardKernel(new MainModule(), new ModelModule()))
             {
-                var ruleLoader = kernel.Get<IRuleLoader>();
+                var ruleLoader = kernel.Get<IDynamicConfigurator>();
                 ruleLoader.LoadAllRules();
 
                 var program = kernel.Get<MusicFileCop>();
