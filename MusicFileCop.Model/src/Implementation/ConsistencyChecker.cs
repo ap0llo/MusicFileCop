@@ -12,17 +12,17 @@ namespace MusicFileCop.Model
     class ConsistencyChecker : IConsistencyChecker, IVisitor
     {
         readonly IKernel m_Kernel;
-        readonly IMapper m_Mapper;
+        readonly IMetadataMapper m_MetadataMapper;
         readonly IOutputWriter m_OutputWriter;
 
         readonly IDictionary<Type, IEnumerable<object>> m_RulesInstanceCache = new Dictionary<Type, IEnumerable<object>>();    
         readonly ISet<ICheckable> m_VisitedNodes = new HashSet<ICheckable>();
 
 
-        public ConsistencyChecker(IMapper fileMapper, IOutputWriter outputWriter, IKernel kernel)
+        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IOutputWriter outputWriter, IKernel kernel)
         {
-            if (fileMapper == null)
-                throw new ArgumentNullException(nameof(fileMapper));
+            if (fileMetadataMapper == null)
+                throw new ArgumentNullException(nameof(fileMetadataMapper));
 
             if (outputWriter == null)
                 throw new ArgumentNullException(nameof(outputWriter));
@@ -30,7 +30,7 @@ namespace MusicFileCop.Model
             if (kernel == null)
                 throw new ArgumentNullException(nameof(kernel));
 
-            m_Mapper = fileMapper;
+            m_MetadataMapper = fileMetadataMapper;
             m_OutputWriter = outputWriter;
             m_Kernel = kernel;
         }
@@ -77,10 +77,10 @@ namespace MusicFileCop.Model
 
             ApplyRules(file);
 
-            //TODO: IMapper should offer something like TryGet()
+            //TODO: IMetadataMapper should offer something like TryGet()
             try
             {
-                var track = m_Mapper.GetTrack(file);
+                var track = m_MetadataMapper.GetTrack(file);
                 track.Accept(this);
             }
             catch (KeyNotFoundException)

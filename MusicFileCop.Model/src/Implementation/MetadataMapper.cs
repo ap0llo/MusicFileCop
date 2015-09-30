@@ -9,14 +9,12 @@ using MusicFileCop.Model.Configuration;
 
 namespace MusicFileCop.Model
 {
-    class Mapper : IMapper
+    class MetadataMapper : IMetadataMapper
     {
         //TODO: Use "doublesided dictionary"
         readonly IDictionary<IFile, ITrack> m_FileToTrackMapping = new Dictionary<IFile, ITrack>();
         readonly IDictionary<ITrack, IFile> m_TrackToFileMapping = new Dictionary<ITrack, IFile>();
-        readonly IDictionary<IDirectory, IConfigurationNode> m_DirectoryToConfigMapping = new Dictionary<IDirectory, IConfigurationNode>();
-        readonly IDictionary<IFile, IConfigurationNode> m_FileToConfigMapping = new Dictionary<IFile, IConfigurationNode>();
-
+        
         //TODO: Some kind of caching mechanism would be great
         public IEnumerable<IDirectory> GetDirectories(IDisk disk) => GetDirectories(disk.Tracks);
 
@@ -40,19 +38,6 @@ namespace MusicFileCop.Model
             return tracks.Select(GetFile).Select(t => t.Directory).Distinct();
         }
 
-        public void AddMapping(IConfigurationNode configurationNode, IDirectory directory)
-        {
-            m_DirectoryToConfigMapping.Add(directory, configurationNode);
-        }
-
-        public void AddMapping(IConfigurationNode configurationNode, IFile file)
-        {
-            m_FileToConfigMapping.Add(file, configurationNode);
-        }
-
-        public IConfigurationNode GetConfiguration(IDirectory directory) => m_DirectoryToConfigMapping[directory];
-
-        public IConfigurationNode GetConfiguration(IFile file) => m_FileToConfigMapping[file];
 
     }
 }

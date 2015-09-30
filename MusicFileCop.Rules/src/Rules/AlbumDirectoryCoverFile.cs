@@ -20,15 +20,22 @@ namespace MusicFileCop.Rules
     [ConfigurationNamespace(AlbumDirectoryCoverFileConstants.ConfigurationNamespace)]
     public class AlbumDirectoryCoverFileRule : IRule<IAlbum>
     {
-        private readonly IMapper m_FileMapper;
+        readonly IMetadataMapper m_FileMapper;
+        readonly IConfigurationMapper m_ConfigurationMapper;
 
-        public AlbumDirectoryCoverFileRule(IMapper fileMapper)
+        public AlbumDirectoryCoverFileRule(IMetadataMapper fileMapper, IConfigurationMapper configurationMapper)
         {
             if(fileMapper == null)
             {
                 throw new ArgumentNullException(nameof(fileMapper));
             }
-            this.m_FileMapper = fileMapper;
+            if (configurationMapper == null)
+            {
+                throw new ArgumentNullException(nameof(configurationMapper));
+            }
+
+            m_FileMapper = fileMapper;
+            m_ConfigurationMapper = configurationMapper;
         }
 
         public string Description => "In every directory containig a album, there must be a Cover.jpg file";
@@ -39,7 +46,7 @@ namespace MusicFileCop.Rules
         {            
             return m_FileMapper.GetDirectories(album).All(dir =>
             {
-                var configurationNode = m_FileMapper.GetConfiguration(dir);
+                var configurationNode = m_ConfigurationMapper.GetConfiguration(dir);
                 var coverFileName = configurationNode.GetValue(AlbumDirectoryCoverFileConstants.CoverFileSettingName);
                 return dir.FileExists(coverFileName);
             });

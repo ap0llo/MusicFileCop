@@ -17,7 +17,8 @@ namespace MusicFileCop.Model.DI
         public override void Load()
         {
             this.Bind<IConsistencyChecker>().To<ConsistencyChecker>();
-            this.Bind<IMapper>().To<Mapper>().InSingletonScope();
+            this.Bind<IMetadataMapper>().To<MetadataMapper>().InSingletonScope();
+            this.Bind<IConfigurationMapper>().To<ConfigurationMapper>().InSingletonScope();
             this.Bind<IConfigurationLoader>().To<ConfigurationLoader>();
             this.Bind<IFileSystemLoader>().To<FileSystemLoader>();
             this.Bind<IMetadataLoader>().To<MetaDataLoader>();

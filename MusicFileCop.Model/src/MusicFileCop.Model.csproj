@@ -79,13 +79,14 @@
   <ItemGroup>
     <Compile Include="DI\ModelModule.cs" />
     <Compile Include="Implementation\Configuration\ConfigurationLoader.cs" />
+    <Compile Include="Implementation\Configuration\ConfigurationMapper.cs" />
     <Compile Include="Implementation\Configuration\ConfigurationNodeBase.cs" />
     <Compile Include="Implementation\Configuration\HierarchicalConfigurationNode.cs" />
     <Compile Include="Implementation\Configuration\MutableConfigurationNode.cs" />
     <Compile Include="Implementation\Configuration\PrefixConfigurationNode.cs" />
     <Compile Include="Implementation\Configuration\PrefixMutableConfigurationNode.cs" />
     <Compile Include="Implementation\ConsistencyChecker.cs" />
-    <Compile Include="Implementation\Mapper.cs" />
+    <Compile Include="Implementation\MetadataMapper.cs" />
     <Compile Include="Implementation\FileSystem\Directory.cs" />
     <Compile Include="Implementation\FileSystem\File.cs" />
     <Compile Include="Implementation\FileSystem\FileSystemLoader.cs" />
@@ -106,8 +107,9 @@
     <Compile Include="Interfaces\FileSystem\IFile.cs" />
     <Compile Include="Interfaces\FileSystem\IFileSystemLoader.cs" />
     <Compile Include="Interfaces\ICheckable.cs" />
+    <Compile Include="Interfaces\IConfigurationMapper.cs" />
     <Compile Include="Interfaces\IConsistencyChecker.cs" />
-    <Compile Include="Interfaces\IMapper.cs" />
+    <Compile Include="Interfaces\IMetadataMapper.cs" />
     <Compile Include="Interfaces\IVisitor.cs" />
     <Compile Include="Interfaces\Output\IOutputWriter.cs" />
     <Compile Include="Interfaces\Metadata\IAlbum.cs" />

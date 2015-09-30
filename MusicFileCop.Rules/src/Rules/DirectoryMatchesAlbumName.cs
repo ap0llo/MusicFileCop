@@ -11,16 +11,16 @@ namespace MusicFileCop.Rules
 {
     public class DirectoryNameMatchesAlbumName : IRule<ITrack>
     {
-        readonly IMapper m_FileMapper;
+        readonly IMetadataMapper m_FileMetadataMapper;
 
-        public DirectoryNameMatchesAlbumName(IMapper fileMapper)
+        public DirectoryNameMatchesAlbumName(IMetadataMapper fileMetadataMapper)
         {
-            if(fileMapper == null)
+            if(fileMetadataMapper == null)
             {
-                throw new ArgumentNullException(nameof(fileMapper));
+                throw new ArgumentNullException(nameof(fileMetadataMapper));
             }
 
-            this.m_FileMapper = fileMapper;
+            this.m_FileMetadataMapper = fileMetadataMapper;
         }
 
 
@@ -28,7 +28,7 @@ namespace MusicFileCop.Rules
 
         public bool IsApplicable(ITrack _) => true;
 
-        public bool IsConsistent(ITrack track) => m_FileMapper.GetFile(track).Directory.Name == track.Album.Name;
+        public bool IsConsistent(ITrack track) => m_FileMetadataMapper.GetFile(track).Directory.Name == track.Album.Name;
         
     }
 }

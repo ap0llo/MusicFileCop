@@ -13,17 +13,17 @@ namespace MusicFileCop.Model.Metadata
     {
         static readonly ISet<string> s_MusicFileExtensions = new HashSet<string>(new[] { ".mp3" }, StringComparer.InvariantCultureIgnoreCase);
         readonly IMetadataFactory m_MetadataFactory;
-        readonly IMapper m_FileMapper;
+        readonly IMetadataMapper m_FileMetadataMapper;
 
-        public MetaDataLoader(IMetadataFactory metadataFactory, IMapper fileMapper)
+        public MetaDataLoader(IMetadataFactory metadataFactory, IMetadataMapper fileMetadataMapper)
         {
             if(metadataFactory == null)
                 throw new ArgumentNullException(nameof(metadataFactory));
-            if (fileMapper == null)
-                throw new ArgumentNullException(nameof(fileMapper));
+            if (fileMetadataMapper == null)
+                throw new ArgumentNullException(nameof(fileMetadataMapper));
 
             this.m_MetadataFactory = metadataFactory;
-            this.m_FileMapper = fileMapper;
+            this.m_FileMetadataMapper = fileMetadataMapper;
         }
 
         public void LoadMetadata(IDirectory directory)
@@ -59,7 +59,7 @@ namespace MusicFileCop.Model.Metadata
                     tag.Title,
                     tag.Performers?.FirstOrDefault());
 
-                m_FileMapper.AddMapping(track, file);
+                m_FileMetadataMapper.AddMapping(track, file);
             }
         }
     }

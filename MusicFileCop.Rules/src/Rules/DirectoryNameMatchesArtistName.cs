@@ -12,15 +12,15 @@ namespace MusicFileCop.Rules
     public class DirectoryNameMatchesArtistName : IRule<IAlbum>
     {
 
-        readonly IMapper m_FileMapper;
+        readonly IMetadataMapper m_FileMetadataMapper;
 
-        public DirectoryNameMatchesArtistName(IMapper fileMapper)
+        public DirectoryNameMatchesArtistName(IMetadataMapper fileMetadataMapper)
         {
-            if(fileMapper == null)
+            if(fileMetadataMapper == null)
             {
-                throw new ArgumentNullException(nameof(fileMapper));
+                throw new ArgumentNullException(nameof(fileMetadataMapper));
             }
-            this.m_FileMapper = fileMapper;
+            this.m_FileMetadataMapper = fileMetadataMapper;
         }
 
 
@@ -28,7 +28,7 @@ namespace MusicFileCop.Rules
 
         public bool IsApplicable(IAlbum album) => true;
         
-        public bool IsConsistent(IAlbum album) => m_FileMapper.GetDirectories(album).All(dir => dir.Name == album.Name);
+        public bool IsConsistent(IAlbum album) => m_FileMetadataMapper.GetDirectories(album).All(dir => dir.Name == album.Name);
       
     }
 }

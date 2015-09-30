@@ -9,6 +9,7 @@ using Ninject;
 using Ninject.Activation;
 using Ninject.Extensions.Conventions;
 using Ninject.Parameters;
+using NLog.LayoutRenderers;
 
 namespace MusicFileCop.Model
 {
@@ -19,12 +20,18 @@ namespace MusicFileCop.Model
         readonly IKernel m_Kernel;
         readonly IMutableConfigurationNode m_DefaultConfigurationNode;
 
+        /// <summary>
+        /// Initializes a new instance of DynamicConfigurator
+        /// </summary>
+        /// <param name="kernel">The Ninject kernel to create the bindings on</param>
+        /// <param name="defaultConfigurationNode">The configuration node to add all default config to</param>
         public DynamicConfigurator(IKernel kernel, IMutableConfigurationNode defaultConfigurationNode)
         {
             if (kernel == null)
             {
                 throw new ArgumentNullException(nameof(kernel));                
             }
+
             if (defaultConfigurationNode == null)
             {
                 throw new ArgumentNullException(nameof(defaultConfigurationNode));
@@ -35,11 +42,22 @@ namespace MusicFileCop.Model
         }
 
 
-        public void LoadAllRules()
+        public void CreateDynamicBindings()
+        {
+  
+            CreateRuleBindings();
+
+            CreateConfigurationBindings();
+
+            LoadDefaultConfiguration();
+        }
+
+
+        void CreateRuleBindings()
         {
             // get all checkables
             var ruleTypes = GetCheckableTypes()
-                .Select(checkableType => typeof (IRule<>).MakeGenericType(checkableType))
+                .Select(checkableType => typeof(IRule<>).MakeGenericType(checkableType))
                 .ToArray();
 
             m_Kernel.Bind(x =>
@@ -48,41 +66,43 @@ namespace MusicFileCop.Model
                     .InheritedFromAny(ruleTypes)
                     .BindAllInterfaces()
                 );
+        }
 
-            var ruleImplementingTypes = ruleTypes
-                .SelectMany(t => m_Kernel.GetAll(t))
-                .Select(instance => instance.GetType())
-                .ToArray();
+        void CreateConfigurationBindings()
+        {
+            var configurableTypes = GetConfigurableTypes();
 
-            foreach (var type in ruleImplementingTypes)
+            foreach (var type in configurableTypes)
             {
-                if (type.GetCustomAttribute<ConfigurationNamespaceAttribute>() != null)
-                {
-                    m_Kernel.Bind<IMapper>()
-                        .ToMethod(c => GetMapperForRule(c, type))
-                        .WhenInjectedInto(type);                    
-                }
+                m_Kernel.Bind<IConfigurationMapper>()
+                    .ToMethod(c => GetMapperForRule(c, type))
+                    .WhenInjectedExactlyInto(type);
             }
+        }
 
+        void LoadDefaultConfiguration()
+        {
+            // bind all types implementing IDefaultConfigurationProvider
             m_Kernel.Bind(x =>
                 x.FromAssembliesMatching(s_RulesAssemblyName)
                     .SelectAllClasses()
                     .InheritedFrom<IDefaultConfigurationProvider>()
                     .BindAllInterfaces());
 
-
+            // get instances of all configuraiton providers
             var defaultConfigurations = m_Kernel.GetAll<IDefaultConfigurationProvider>();
 
+            // call configure on all providers
             foreach (var configProvider in defaultConfigurations)
-            {             
+            {
                 var wrapper = new PrefixMutableConfigurationNode(m_DefaultConfigurationNode, configProvider.ConfigurationNamespace);
-                configProvider.Configure(wrapper);      
+                configProvider.Configure(wrapper);
             }
-
         }
 
+        
 
-        internal IEnumerable<Type> GetCheckableTypes() => GetCheckableTypes(Assembly.GetAssembly(typeof (ModelModule)));
+        internal IEnumerable<Type> GetCheckableTypes() => GetCheckableTypes(Assembly.GetAssembly(typeof(ModelModule)));
 
         internal IEnumerable<Type> GetCheckableTypes(Assembly assembly)
         {
@@ -91,8 +111,19 @@ namespace MusicFileCop.Model
                 .Where(t => t.IsPublic);
         }
 
+        internal IEnumerable<Type> GetConfigurableTypes()
+        {
+            return GetConfigurableTypes(Assembly.Load("MusicFileCop.Rules"))
+                .Union(GetConfigurableTypes(Assembly.GetExecutingAssembly()));
+        }
 
-        IMapper GetMapperForRule(IContext context, Type ruleImplemetationType)
+        internal IEnumerable<Type> GetConfigurableTypes(Assembly assembly)
+        {
+            return assembly.GetTypes()
+                .Where(t => t.GetCustomAttribute<ConfigurationNamespaceAttribute>() != null);
+        }
+
+        IConfigurationMapper GetMapperForRule(IContext context, Type ruleImplemetationType)
         {
             var configurationNamespace = ruleImplemetationType.GetCustomAttribute<ConfigurationNamespaceAttribute>().Namespace;
 

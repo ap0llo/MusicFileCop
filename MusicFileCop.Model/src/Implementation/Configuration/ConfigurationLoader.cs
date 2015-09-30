@@ -17,18 +17,18 @@ namespace MusicFileCop.Model.Configuration
         const string s_DirectoryConfigName = "MusicFileCop.json";
         const string s_FileConfigName = "{0}.MusicFileCop.json";
 
-        readonly IMapper m_FileMapper;
+        readonly IConfigurationMapper m_Mapper;
         readonly IConfigurationNode m_DefaultConfiguration;
 
 
-        public ConfigurationLoader(IMapper fileMapper, IConfigurationNode defaultConfiguration)
+        public ConfigurationLoader(IConfigurationMapper mapper, IConfigurationNode defaultConfiguration)
         {
-            if(fileMapper == null)
+            if(mapper == null)
             {
-                throw new ArgumentNullException(nameof(fileMapper));
+                throw new ArgumentNullException(nameof(mapper));
             }
 
-            this.m_FileMapper = fileMapper;
+            this.m_Mapper = mapper;
             this.m_DefaultConfiguration = defaultConfiguration;
         }
 
@@ -51,7 +51,7 @@ namespace MusicFileCop.Model.Configuration
             {
                 configNode = parentNode;
             }
-            m_FileMapper.AddMapping(configNode, directory);
+            m_Mapper.AddMapping(configNode, directory);
 
 
             foreach (var file in directory.Files)
@@ -79,7 +79,7 @@ namespace MusicFileCop.Model.Configuration
                 configNode = parentNode;
             }
 
-            m_FileMapper.AddMapping(configNode, file);
+            m_Mapper.AddMapping(configNode, file);
         }
 
         internal IConfiguration LoadConfigurationFile(IFile configFile)

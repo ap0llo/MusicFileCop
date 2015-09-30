@@ -2,6 +2,6 @@
 {
     public interface IDynamicConfigurator
     {
-        void LoadAllRules();
+        void CreateDynamicBindings();
     }
 }

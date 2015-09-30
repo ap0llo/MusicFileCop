@@ -12,15 +12,15 @@ namespace MusicFileCop.Rules
     public class MultiDiskFileName : IRule<ITrack>
     {
 
-        readonly IMapper m_FileMapper;
+        readonly IMetadataMapper m_FileMetadataMapper;
 
-        public MultiDiskFileName(IMapper fileMapper)
+        public MultiDiskFileName(IMetadataMapper fileMetadataMapper)
         {
-            if (fileMapper == null)
+            if (fileMetadataMapper == null)
             {
-                throw new ArgumentNullException(nameof(fileMapper));
+                throw new ArgumentNullException(nameof(fileMetadataMapper));
             }
-            this.m_FileMapper = fileMapper;
+            this.m_FileMetadataMapper = fileMetadataMapper;
         }
 
 
@@ -28,7 +28,7 @@ namespace MusicFileCop.Rules
 
         public bool IsApplicable(ITrack track) => track.Album.Disks.Count() > 1;
 
-        public bool IsConsistent(ITrack track) => m_FileMapper.GetFile(track).Name == GetExpectedFileName(track);
+        public bool IsConsistent(ITrack track) => m_FileMetadataMapper.GetFile(track).Name == GetExpectedFileName(track);
 
 
 

@@ -11,15 +11,15 @@ namespace MusicFileCop.Rules
 {
     public class SingleDiskFileName : IRule<ITrack>
     {
-        readonly IMapper m_FileMapper;
+        readonly IMetadataMapper m_FileMetadataMapper;
 
-        public SingleDiskFileName(IMapper fileMapper)
+        public SingleDiskFileName(IMetadataMapper fileMetadataMapper)
         {
-            if (fileMapper == null)
+            if (fileMetadataMapper == null)
             {
-                throw new ArgumentNullException(nameof(fileMapper));
+                throw new ArgumentNullException(nameof(fileMetadataMapper));
             }
-            this.m_FileMapper = fileMapper;
+            this.m_FileMetadataMapper = fileMetadataMapper;
         }
 
 
@@ -30,7 +30,7 @@ namespace MusicFileCop.Rules
         public bool IsConsistent(ITrack track)
         {
             var expectedFileName = $"{track.TrackNumber:D2} - {track.Name}";
-            var actualFileName = m_FileMapper.GetFile(track).Name;
+            var actualFileName = m_FileMetadataMapper.GetFile(track).Name;
 
             if(expectedFileName != actualFileName)
             {

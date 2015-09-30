@@ -9,14 +9,10 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model
 {
-    public interface IMapper
+    public interface IMetadataMapper
     {
         void AddMapping(ITrack track, IFile file);
-
-        void AddMapping(IConfigurationNode configurationNode, IDirectory directory);
-
-        void AddMapping(IConfigurationNode configurationNode, IFile file);
-
+        
         ITrack GetTrack(IFile file);
 
         IFile GetFile(ITrack track);
@@ -25,8 +21,5 @@ namespace MusicFileCop.Model
 
         IEnumerable<IDirectory> GetDirectories(IDisk disk);
     
-        IConfigurationNode GetConfiguration(IDirectory directory);
-
-        IConfigurationNode GetConfiguration(IFile file);
     }
 }
