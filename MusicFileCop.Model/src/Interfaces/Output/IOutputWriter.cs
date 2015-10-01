@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace MusicFileCop.Model.Output
 {
-    public interface IOutputWriter
-    {
-        
-        void WriteViolation<T>(IRule<T> violatedRule, T file) where T : ICheckable;
 
+    public interface IOutputWriter<T> where T : ICheckable
+    {
+        void WriteViolation(IRule<T> violatedRule, T item);
     }
+
+
 }

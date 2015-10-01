@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,21 +18,23 @@ namespace MusicFileCop.Model.FileSystem
         public IEnumerable<IDirectory> Directories => m_Directories.Values;
 
         public IEnumerable<IFile> Files => m_Files.Values;
-        
-        public string Name { get; }     
+
+        public string Name => Path.GetFileName(FullPath);   
+
+        public string FullPath { get; }
 
         public IDirectory ParentDirectory { get; }   
 
 
-        public Directory(IDirectory parentDirectory, string name)
+        public Directory(IDirectory parentDirectory, string fullPath)
         {
-            if(String.IsNullOrEmpty(name))
+            if(String.IsNullOrEmpty(fullPath))
             {
-                throw new ArgumentException("Directory Name must not be null or empty", nameof(name));
+                throw new ArgumentException("Directory path must not be null or empty", nameof(fullPath));
             }
 
             this.ParentDirectory = parentDirectory;
-            this.Name = name;
+            this.FullPath = fullPath;
         }
 
 

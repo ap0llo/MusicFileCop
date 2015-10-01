@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using MusicFileCop.Model.FileSystem;
@@ -13,25 +14,24 @@ namespace MusicFileCop.Model
     {
         readonly IKernel m_Kernel;
         readonly IMetadataMapper m_MetadataMapper;
-        readonly IOutputWriter m_OutputWriter;
-
-        readonly IDictionary<Type, IEnumerable<object>> m_RulesInstanceCache = new Dictionary<Type, IEnumerable<object>>();    
+        
+        readonly IDictionary<Type, IEnumerable<object>> m_RulesInstanceCache = new Dictionary<Type, IEnumerable<object>>();
+        readonly IDictionary<Type, object> m_OutputWriterCache = new Dictionary<Type, object>(); 
         readonly ISet<ICheckable> m_VisitedNodes = new HashSet<ICheckable>();
 
 
-        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IOutputWriter outputWriter, IKernel kernel)
+        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IKernel kernel)
         {
             if (fileMetadataMapper == null)
-                throw new ArgumentNullException(nameof(fileMetadataMapper));
-
-            if (outputWriter == null)
-                throw new ArgumentNullException(nameof(outputWriter));
-
+            {
+                throw new ArgumentNullException(nameof(fileMetadataMapper));                
+            }
             if (kernel == null)
-                throw new ArgumentNullException(nameof(kernel));
+            {
+                throw new ArgumentNullException(nameof(kernel));                
+            }
 
             m_MetadataMapper = fileMetadataMapper;
-            m_OutputWriter = outputWriter;
             m_Kernel = kernel;
         }
 
@@ -169,12 +169,24 @@ namespace MusicFileCop.Model
             {
                 if (!rule.IsConsistent(checkable))
                 {
-                    m_OutputWriter.WriteViolation(rule, checkable);
+                    GetOutputWriter<T>().WriteViolation(rule, checkable);
                 }
             }
         }
 
-        IEnumerable<IRule<T>> GetRules<T>() where T : ICheckable
+        IOutputWriter<T> GetOutputWriter<T>() where T : ICheckable
+        {
+            if (!m_OutputWriterCache.ContainsKey(typeof (T)))
+            {
+                var writer = m_Kernel.Get<IOutputWriter<T>>();
+                m_OutputWriterCache.Add(typeof(T), writer);
+            }
+
+            return (IOutputWriter <T>) m_OutputWriterCache[typeof (T)];
+        }
+            
+            
+            IEnumerable<IRule<T>> GetRules<T>() where T : ICheckable
         {
             if (!m_RulesInstanceCache.ContainsKey(typeof (T)))
             {

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MusicFileCop.Model.Rules;
+using Ninject.Extensions.Conventions;
 
 namespace MusicFileCop.Model.DI
 {
@@ -23,11 +24,13 @@ namespace MusicFileCop.Model.DI
             this.Bind<IFileSystemLoader>().To<FileSystemLoader>();
             this.Bind<IMetadataLoader>().To<MetaDataLoader>();
             this.Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
-            this.Bind<IOutputWriter>().To<OutputWriter>();
+            
+            var consoleOutputWriter = new ConsoleOutputWriter();
+            this.Bind(typeof(IOutputWriter<>)).ToConstant(consoleOutputWriter);
+            
             this.Bind<IDynamicConfigurator>().To<DynamicConfigurator>();
 
             var defaultConfigNode = new MutableConfigurationNode();            
-
             this.Bind<IConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<ConfigurationLoader>();
             this.Bind<IMutableConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<DynamicConfigurator>();
         }

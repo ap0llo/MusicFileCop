@@ -24,9 +24,8 @@ namespace MusicFileCop.Model.FileSystem
             {
                 throw new DirectoryNotFoundException($"Could not find directory '{path}'");
             }
-
-            var name = Path.GetFileName(path);
-            var currentDirectory = new Directory(parent, name);
+            
+            var currentDirectory = new Directory(parent, path);
 
             foreach (var filePath in IO.Directory.GetFiles(path))
             {

@@ -10,6 +10,8 @@ namespace MusicFileCop.Model.FileSystem
     {
         string Name { get; }
 
+        string FullPath { get; }
+
         IDirectory ParentDirectory { get; }
 
         IEnumerable<IDirectory> Directories { get; }
