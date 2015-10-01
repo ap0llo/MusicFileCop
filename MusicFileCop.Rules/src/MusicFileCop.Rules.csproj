@@ -44,6 +44,7 @@
     <Compile Include="Rules\DirectoryMatchesAlbumName.cs" />
     <Compile Include="Rules\AlbumDirectoryCoverFile.cs" />
     <Compile Include="Rules\DirectoryNameMatchesArtistName.cs" />
+    <Compile Include="Rules\DiskNumberIsPositive.cs" />
     <Compile Include="Rules\FileName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
