@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rules\AlbumMustHaveArtist.cs" />
+    <Compile Include="Rules\AlbumNameMustNotBeEmpty.cs" />
+    <Compile Include="Rules\ArtistNameMustNotBeEmpty.cs" />
     <Compile Include="Rules\DirectoryMatchesAlbumName.cs" />
     <Compile Include="Rules\AlbumDirectoryCoverFile.cs" />
     <Compile Include="Rules\DirectoryNameMatchesArtistName.cs" />
     <Compile Include="Rules\DiskNumberIsPositive.cs" />
     <Compile Include="Rules\FileName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\TrackMustHaveArtist.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MusicFileCop.Model\src\MusicFileCop.Model.csproj">
