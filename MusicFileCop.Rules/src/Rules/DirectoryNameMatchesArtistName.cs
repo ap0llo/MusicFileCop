@@ -26,7 +26,7 @@ namespace MusicFileCop.Rules
 
         public string Description => "All album directories must be contained in directories named the same as the album artist";        
 
-        public bool IsApplicable(IAlbum album) => true;
+        public bool IsApplicable(IAlbum album) => !String.IsNullOrEmpty(album.Artist?.Name);
         
         public bool IsConsistent(IAlbum album) => m_FileMetadataMapper.GetDirectories(album).All(dir => dir.Name == album.Name);
       

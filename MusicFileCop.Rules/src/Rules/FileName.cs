@@ -125,7 +125,7 @@ namespace MusicFileCop.Rules
 
 
 
-        string GetExpectedFileName(ITrack track) => $"{track.Disk.DiskNumber}-{track.TrackNumber} - {TrackNameToFileName(track)}";
+        string GetExpectedFileName(ITrack track) => $"{track.Disk.DiskNumber}-{track.TrackNumber:D2} - {TrackNameToFileName(track)}";
     }
 
 }
