@@ -9,7 +9,7 @@ using MusicFileCop.Model.Metadata;
 
 namespace MusicFileCop.Rules
 {
-    public class DirectoryNameMatchesAlbumName : IRule<ITrack>
+    public class DirectoryNameMatchesAlbumName : IRule<IAlbum>
     {
         readonly IMetadataMapper m_FileMetadataMapper;
 
@@ -26,9 +26,9 @@ namespace MusicFileCop.Rules
 
         public string Description => "The directory a music file is located in must have the same name as the album";
 
-        public bool IsApplicable(ITrack track) => !String.IsNullOrWhiteSpace(track.Album?.Name);
+        public bool IsApplicable(IAlbum album) => !String.IsNullOrWhiteSpace(album.Name);
 
-        public bool IsConsistent(ITrack track) => m_FileMetadataMapper.GetFile(track).Directory.Name == track.Album.Name;
-        
+        public bool IsConsistent(IAlbum album) => m_FileMetadataMapper.GetDirectories(album).All(dir => dir.Name == album.Name);
+
     }
 }
