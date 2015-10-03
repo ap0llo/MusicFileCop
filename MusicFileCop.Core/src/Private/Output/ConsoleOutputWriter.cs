@@ -20,10 +20,6 @@ namespace MusicFileCop.Core.Output
     {
 
 
-//        public void WriteViolation<T>(IRule<T> violatedRule, T item) where T : ICheckable
-//        {
-
-//        }
         public void WriteViolation(IRule<IFile> violatedRule, IFile file)
         {
            Console.WriteLine($"File {file.FullPath} violates Rule {violatedRule.GetType().Name}");

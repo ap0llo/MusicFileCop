@@ -86,6 +86,8 @@
     <Compile Include="Configuration\Helpers\ConfigurationMockHelper.cs" />
     <Compile Include="Configuration\HierarchicalConfigurationNodeTest.cs" />
     <Compile Include="Configuration\PrefixConfigurationNodeTest.cs" />
+    <Compile Include="DirectoryMockHelper.cs" />
+    <Compile Include="MetadataMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\RuleLoaderTest.cs" />
     <Compile Include="Rules\TestCheckable.cs" />

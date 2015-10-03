@@ -1,7 +1,12 @@
 ﻿
 namespace MusicFileCop.Core.Rules
 {
-    public interface IRule<in T> where T : ICheckable
+    public interface IRule
+    {
+        
+    }
+
+    public interface IRule<T> : IRule where T : ICheckable
     {     
         string Description { get; }
 

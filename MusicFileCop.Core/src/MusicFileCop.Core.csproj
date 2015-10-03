@@ -97,6 +97,7 @@
     <Compile Include="Private\Metadata\MetadataLoader.cs" />
     <Compile Include="Private\Metadata\Track.cs" />
     <Compile Include="Private\Output\ConsoleOutputWriter.cs" />
+    <Compile Include="Private\Output\StructuedOutputWriter.cs" />
     <Compile Include="Private\PrefixConfigurationMapper.cs" />
     <Compile Include="Private\DynamicConfigurator.cs" />
     <Compile Include="Public\Configuration\IConfigurationLoader.cs" />

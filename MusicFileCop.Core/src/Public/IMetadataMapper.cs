@@ -12,6 +12,8 @@ namespace MusicFileCop.Core
 
         IFile GetFile(ITrack track);
 
+        IEnumerable<IDirectory> GetDirectories(IArtist artist);
+
         IEnumerable<IDirectory> GetDirectories(IAlbum album);
 
         IEnumerable<IDirectory> GetDirectories(IDisk disk);

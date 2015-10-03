@@ -2,31 +2,41 @@
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
+using Ninject;
 using Ninject.Modules;
+using Ninject.Planning.Bindings;
 
 namespace MusicFileCop.Core.DI
 {
     public class CoreModule : NinjectModule
     {
         public override void Load()
-        {
-            this.Bind<IConsistencyChecker>().To<ConsistencyChecker>();
-            this.Bind<IMetadataMapper>().To<MetadataMapper>().InSingletonScope();
-            this.Bind<IConfigurationMapper>().To<ConfigurationMapper>().InSingletonScope();
-            this.Bind<IConfigurationLoader>().To<ConfigurationLoader>();
-            this.Bind<IFileSystemLoader>().To<FileSystemLoader>();
-            this.Bind<IMetadataLoader>().To<MetaDataLoader>();
-            this.Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
-            
-            var consoleOutputWriter = new ConsoleOutputWriter();
-            this.Bind(typeof(IOutputWriter<>)).ToConstant(consoleOutputWriter);
-            
-            this.Bind<IDynamicConfigurator>().To<DynamicConfigurator>();
+        {        
+            var metadataMapper = new MetadataMapper();
+            var outputWriter = new StructuedOutputWriter(metadataMapper);
 
-            var defaultConfigNode = new MutableConfigurationNode();            
-            this.Bind<IConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<ConfigurationLoader>();
-            this.Bind<IMutableConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<DynamicConfigurator>();
+            Bind<IConsistencyChecker>().To<ConsistencyChecker>();
+            Bind<IMetadataMapper>().ToConstant(metadataMapper);
+            Bind<IConfigurationMapper>().To<ConfigurationMapper>().InSingletonScope();
+            Bind<IConfigurationLoader>().To<ConfigurationLoader>();
+            Bind<IFileSystemLoader>().To<FileSystemLoader>();
+            Bind<IMetadataLoader>().To<MetaDataLoader>();
+            Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
+
+            Bind<StructuedOutputWriter>().ToConstant(outputWriter);
+            Bind<IOutputWriter<IFile>>().ToConstant(outputWriter);
+            Bind<IOutputWriter<IDirectory>>().ToConstant(outputWriter);
+            Bind<IOutputWriter<IArtist>>().ToConstant(outputWriter);
+            Bind<IOutputWriter<IAlbum>>().ToConstant(outputWriter);
+            Bind<IOutputWriter<IDisk>>().ToConstant(outputWriter);
+            Bind<IOutputWriter<ITrack>>().ToConstant(outputWriter);
+
+
+            Bind<IDynamicConfigurator>().To<DynamicConfigurator>();
+
+            var defaultConfigNode = new MutableConfigurationNode();
+            Bind<IConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<ConfigurationLoader>();
+            Bind<IMutableConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<DynamicConfigurator>();
         }
-
     }
 }

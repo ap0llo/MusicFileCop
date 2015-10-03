@@ -29,11 +29,12 @@ namespace MusicFileCop
                 var program = kernel.Get<MusicFileCop>();
                 program.Run(args[0]);
 
-                Console.WriteLine();
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey();
-
             }
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+
             
         }
     }
