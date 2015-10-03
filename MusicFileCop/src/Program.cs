@@ -32,8 +32,8 @@ namespace MusicFileCop
             }
 
             Console.WriteLine();
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
 
             
         }

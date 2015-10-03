@@ -28,7 +28,11 @@ namespace MusicFileCop.Rules
 
         public bool IsApplicable(IAlbum album) => !String.IsNullOrWhiteSpace(album.Name);
 
-        public bool IsConsistent(IAlbum album) => m_FileMetadataMapper.GetDirectories(album).All(dir => dir.Name == album.Name);
-
+        public bool IsConsistent(IAlbum album)
+        {
+            return m_FileMetadataMapper
+                .GetDirectories(album)
+                .All(dir => album.Name.ReplaceInvalidFileNameChars("").Equals(dir.Name, StringComparison.CurrentCultureIgnoreCase));
+        }
     }
 }

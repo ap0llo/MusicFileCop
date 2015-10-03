@@ -57,14 +57,8 @@ namespace MusicFileCop.Rules
 
             var name = track.Name;
 
-            var replacement = configuration.GetValue(FileNameConstants.InvalidCharReplacementSettingName);
-
-            foreach (var invalidChar in Path.GetInvalidFileNameChars())
-            {
-                name = name.Replace(invalidChar.ToString(), replacement);
-            }
-
-            return name;
+            var replacement = configuration.GetValue(FileNameConstants.InvalidCharReplacementSettingName);            
+            return name.ReplaceInvalidFileNameChars(replacement).ReplaceInvalidPathChars(replacement);
         }
     }
 
@@ -95,7 +89,7 @@ namespace MusicFileCop.Rules
             var expectedFileName = $"{track.TrackNumber:D2} - {TrackNameToFileName(track)}";
             var actualFileName = m_MetadataMapper.GetFile(track).Name;            
 
-            return expectedFileName == actualFileName;
+            return expectedFileName.Equals(actualFileName, StringComparison.CurrentCultureIgnoreCase);
         }
 
     }
@@ -121,7 +115,10 @@ namespace MusicFileCop.Rules
 
         public bool IsApplicable(ITrack track) => track.Album.Disks.Count() > 1;
 
-        public bool IsConsistent(ITrack track) => m_MetadataMapper.GetFile(track).Name == GetExpectedFileName(track);
+        public bool IsConsistent(ITrack track)
+        {
+            return GetExpectedFileName(track).Equals(m_MetadataMapper.GetFile(track).Name, StringComparison.InvariantCultureIgnoreCase);
+        }
 
 
 
