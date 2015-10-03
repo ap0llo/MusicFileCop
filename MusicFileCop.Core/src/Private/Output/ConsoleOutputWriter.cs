@@ -8,7 +8,7 @@ using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
 using MusicFileCop.Core.Rules;
 
-namespace MusicFileCop.Model.Output
+namespace MusicFileCop.Core.Output
 {
     class ConsoleOutputWriter : 
         IOutputWriter<IFile>, 

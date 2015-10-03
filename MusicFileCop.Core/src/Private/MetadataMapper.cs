@@ -2,7 +2,6 @@
 using System.Linq;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
-using MusicFileCop.Model;
 
 namespace MusicFileCop.Core
 {

@@ -1,5 +1,4 @@
 ﻿using MusicFileCop.Core.Rules;
-using MusicFileCop.Model;
 
 namespace MusicFileCop.Core.Output
 {

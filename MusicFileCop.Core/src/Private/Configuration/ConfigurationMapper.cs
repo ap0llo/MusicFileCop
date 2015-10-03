@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MusicFileCop.Core.FileSystem;
-using MusicFileCop.Model;
 
 namespace MusicFileCop.Core.Configuration
 {

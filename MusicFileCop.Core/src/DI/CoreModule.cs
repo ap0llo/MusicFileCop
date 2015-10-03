@@ -2,8 +2,6 @@
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
-using MusicFileCop.Model;
-using MusicFileCop.Model.Output;
 using Ninject.Modules;
 
 namespace MusicFileCop.Core.DI

@@ -1,5 +1,4 @@
-﻿using MusicFileCop.Model;
-
+﻿
 namespace MusicFileCop.Core.Metadata
 {
     class Track : ITrack

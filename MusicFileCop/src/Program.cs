@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using MusicFileCop.Core;
 using MusicFileCop.Core.DI;
-using MusicFileCop.Model;
 using TagLib;
 using TagLib.Mpeg;
 

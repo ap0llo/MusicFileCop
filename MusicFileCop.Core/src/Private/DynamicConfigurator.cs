@@ -5,7 +5,6 @@ using System.Reflection;
 using MusicFileCop.Core.Configuration;
 using MusicFileCop.Core.DI;
 using MusicFileCop.Core.Rules;
-using MusicFileCop.Model;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Extensions.Conventions;

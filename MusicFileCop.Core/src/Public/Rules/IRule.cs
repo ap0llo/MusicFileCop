@@ -1,5 +1,4 @@
-﻿using MusicFileCop.Model;
-
+﻿
 namespace MusicFileCop.Core.Rules
 {
     public interface IRule<in T> where T : ICheckable

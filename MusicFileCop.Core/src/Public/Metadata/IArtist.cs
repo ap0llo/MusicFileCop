@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MusicFileCop.Model;
 
 namespace MusicFileCop.Core.Metadata
 {
