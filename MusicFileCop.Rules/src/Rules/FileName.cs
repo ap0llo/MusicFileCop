@@ -1,13 +1,13 @@
-﻿using MusicFileCop.Model;
-using MusicFileCop.Model.Metadata;
-using MusicFileCop.Model.Rules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MusicFileCop.Model.Configuration;
+using MusicFileCop.Core;
+using MusicFileCop.Core.Configuration;
+using MusicFileCop.Core.Metadata;
+using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Rules
 {

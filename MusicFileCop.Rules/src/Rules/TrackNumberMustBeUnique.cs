@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using MusicFileCop.Model.Metadata;
-using MusicFileCop.Model.Rules;
+using MusicFileCop.Core.Metadata;
+using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Rules
 {

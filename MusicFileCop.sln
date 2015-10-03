@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop", "MusicFileCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Rules", "MusicFileCop.Rules\src\MusicFileCop.Rules.csproj", "{0CC834BD-82C6-444F-806D-E4310D15872A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Model", "MusicFileCop.Model\src\MusicFileCop.Model.csproj", "{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Core", "MusicFileCop.Core\src\MusicFileCop.Core.csproj", "{653410F1-5D93-4F0E-8B8A-63B1B21AE3D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Model.Test", "MusicFileCop.Model\test\MusicFileCop.Model.Test.csproj", "{80E5B3E3-0826-42FD-B742-5E4BDEEC9533}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Core.Test", "MusicFileCop.Core\test\MusicFileCop.Core.Test.csproj", "{80E5B3E3-0826-42FD-B742-5E4BDEEC9533}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicFileCop.Test", "MusicFileCop\test\MusicFileCop.Test.csproj", "{25E6C3EA-E09C-41E5-B67C-216FEE56D968}"
 EndProject

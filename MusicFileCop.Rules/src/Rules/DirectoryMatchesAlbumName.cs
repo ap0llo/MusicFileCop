@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MusicFileCop.Model;
-using MusicFileCop.Model.Rules;
-using MusicFileCop.Model.Metadata;
+using MusicFileCop.Core;
+using MusicFileCop.Core.Metadata;
+using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Rules
 {
