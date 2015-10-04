@@ -20,10 +20,9 @@ namespace MusicFileCop.Core.Configuration
             m_ParentNode = parentNode;
             m_Configuration = configuration;
         }
-
-
-
-        protected override bool TryGetValue(string name, out string value) => m_Configuration.TryGet(name, out value);
+    
+        public override bool TryGetValue(string name, out string value) => m_Configuration.TryGet(name, out value);
+  
 
         protected override T HandleMissingValue<T>(string name)
         {

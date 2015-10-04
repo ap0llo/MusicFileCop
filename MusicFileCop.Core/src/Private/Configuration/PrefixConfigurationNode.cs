@@ -34,7 +34,17 @@ namespace MusicFileCop.Core.Configuration
         }
 
 
+        public bool TryGetValue(string name, out string value)
+        {
+            return m_WrappedConfigurationNode.TryGetValue(GetPrefixedName(name), out value);
+        }
+
         public string GetValue(string name) => m_WrappedConfigurationNode.GetValue(GetPrefixedName(name));
+
+        public bool TryGetValue<T>(string name, out T value)
+        {
+            return m_WrappedConfigurationNode.TryGetValue(GetPrefixedName(name), out value);
+        }
 
         public T GetValue<T>(string name) => m_WrappedConfigurationNode.GetValue<T>(GetPrefixedName(name));
 

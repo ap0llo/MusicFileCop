@@ -8,11 +8,11 @@ namespace MusicFileCop.Core.Configuration
     {
         readonly IDictionary<string, string> m_Values = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
+
         public MutableConfigurationNode()
         {
             
         }
-
 
 
         public void AddValue<T>(string name, T value)
@@ -27,11 +27,9 @@ namespace MusicFileCop.Core.Configuration
             {
                 m_Values.Add(name, value.ToString());
             }
-        }
+        }       
+        public override bool TryGetValue(string name, out string value) => m_Values.TryGetValue(name, out value);
 
-
-
-        protected override bool TryGetValue(string name, out string value) => m_Values.TryGetValue(name, out value);
 
         protected override T HandleMissingValue<T>(string name)
         {

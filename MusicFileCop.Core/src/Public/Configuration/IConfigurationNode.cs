@@ -2,8 +2,12 @@
 {
     public interface IConfigurationNode
     {
-        string GetValue(string name); 
+        bool TryGetValue(string name, out string value);
 
-        T GetValue<T>(string name);   
+        string GetValue(string name);
+
+        bool TryGetValue<T>(string name, out T value);
+
+        T GetValue<T>(string name);
     }
 }

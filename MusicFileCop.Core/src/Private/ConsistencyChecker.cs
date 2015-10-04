@@ -14,6 +14,7 @@ namespace MusicFileCop.Core
         readonly IKernel m_Kernel;
         readonly IMetadataMapper m_MetadataMapper;
         
+
         readonly IDictionary<Type, IEnumerable<object>> m_RulesInstanceCache = new Dictionary<Type, IEnumerable<object>>();
         readonly IDictionary<Type, object> m_OutputWriterCache = new Dictionary<Type, object>(); 
         readonly ISet<ICheckable> m_VisitedNodes = new HashSet<ICheckable>();

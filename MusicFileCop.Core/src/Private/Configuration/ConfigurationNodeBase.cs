@@ -18,33 +18,47 @@ namespace MusicFileCop.Core.Configuration
 
         public string GetValue(string name) => GetValue<string>(name);
 
-
         public T GetValue<T>(string name)
         {
-            if (m_ParsedValues.ContainsKey(name))
+            T value;
+            if (TryGetValue<T>(name, out value))
             {
-                return (T)m_ParsedValues[name];
-            }
-
-            string stringValue;
-            if (TryGetValue(name, out stringValue))
-            {
-                var value = (T) Parse<T>(stringValue);
-                m_ParsedValues.Add(name, value);
                 return value;
             }
             else
             {
                 return HandleMissingValue<T>(name);
             }
+        }
+
+        public bool TryGetValue<T>(string name, out T value)
+        {
+            if (m_ParsedValues.ContainsKey(name))
+            {
+                value = (T)m_ParsedValues[name];
+                return true;
+            }
+
+            string stringValue;
+            if (TryGetValue(name, out stringValue))
+            {
+                value = (T) Parse<T>(stringValue);
+                m_ParsedValues.Add(name, value);
+                return true;
+            }
+            else
+            {
+                value = default(T);
+                return false;
+            }
           
         }
 
+        public abstract bool TryGetValue(string name, out string value);
 
-        protected abstract bool TryGetValue(string name, out string value);
+
 
         protected abstract T HandleMissingValue<T>(string name);
-
 
         protected object Parse<T>(string value)
         {
@@ -84,7 +98,6 @@ namespace MusicFileCop.Core.Configuration
                 throw new NotSupportedException($"Type '{typeof(T)}' is not supported");
             }
         }
-
 
         protected void EnsureTypeIsSupported<T>()
         {
