@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "CommandLineParser": "2.0.273-beta",
+    "Ninject": "3.2.2.0",
+    "Ninject.Extensions.Conventions": "3.2.0.0",
+    "NLog": "4.1.2",
+    "NLog.Config": "4.1.2",
+    "NLog.Schema": "4.0.1",
+    "taglib": "2.1.0.0"
+  },
+  "frameworks": {
+    "net46": { }
+  },
+  "runtimes": {
+    "win-anycpu": { }
+  }
+}
