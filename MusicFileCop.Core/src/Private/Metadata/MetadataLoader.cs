@@ -49,13 +49,13 @@ namespace MusicFileCop.Core.Metadata
                 var tag = audioFile.GetTag(TagTypes.Id3v2);
 
                 var track = m_MetadataFactory.GetTrack(
-                    tag.AlbumArtists?.Aggregate((a,b) => $"{a}/{b}"),
+                    tag.AlbumArtists != null && tag.AlbumArtists.Any() ? tag.AlbumArtists.Aggregate((a, b) => $"{a}/{b}") : "",
                     tag.Album,
                     (int) tag.Year,
                     (int) tag.Disc,
                     (int) tag.Track,
                     tag.Title,
-                    tag.Performers.Aggregate((a, b) => $"{a}/{b}"));
+                    tag.Performers != null && tag.Performers.Any() ? tag.Performers.Aggregate((a, b) => $"{a}/{b}") : "");
 
                 m_FileMetadataMapper.AddMapping(track, file);
             }
