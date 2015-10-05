@@ -77,6 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Private\ConsistencyChecker\ConsistencyCheckerBase.cs" />
+    <Compile Include="Private\ConsistencyChecker\ConsistencyCheckerDefaultConfigurationProvider.cs" />
     <Compile Include="DI\CoreModule.cs" />
     <Compile Include="Private\Configuration\ConfigurationLoader.cs" />
     <Compile Include="Private\Configuration\ConfigurationMapper.cs" />
@@ -85,7 +87,7 @@
     <Compile Include="Private\Configuration\MutableConfigurationNode.cs" />
     <Compile Include="Private\Configuration\PrefixConfigurationNode.cs" />
     <Compile Include="Private\Configuration\PrefixMutableConfigurationNode.cs" />
-    <Compile Include="Private\ConsistencyChecker.cs" />
+    <Compile Include="Private\ConsistencyChecker\ConsistencyChecker.cs" />
     <Compile Include="Private\MetadataMapper.cs" />
     <Compile Include="Private\FileSystem\Directory.cs" />
     <Compile Include="Private\FileSystem\File.cs" />
@@ -129,9 +131,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Private\Rules\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

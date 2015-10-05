@@ -80,6 +80,8 @@ namespace MusicFileCop.Rules
         }
 
 
+        public string Id => RuleIds.SingleDiskFileName;
+
         public string Description => @"For albums that only have a single disk, the filename matches the format '{TRACKNUMBER}- {TITLE}'";
 
         public bool IsApplicable(ITrack track) => track.Album.Disks.Count() == 1;
@@ -110,6 +112,8 @@ namespace MusicFileCop.Rules
             this.m_MetadataMapper = metadataMapper;
         }
 
+
+        public string Id => RuleIds.MultiDiskFileName;
 
         public string Description => @"For albums that only have a single disk, the filename matches the format '{DISKNUMBER}-{TRACKNUMBER}- {TITLE}'";
 

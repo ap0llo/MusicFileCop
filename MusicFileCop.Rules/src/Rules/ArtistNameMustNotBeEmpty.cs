@@ -6,6 +6,8 @@ namespace MusicFileCop.Rules
 {
     public class ArtistNameMustNotBeEmptyRule : IRule<IArtist>
     {
+        public string Id => RuleIds.ArtistNameMustNotBeEmpty;
+
         public string Description => "The name of an artist must not be empty";
 
         public bool IsApplicable(IArtist item) => true;

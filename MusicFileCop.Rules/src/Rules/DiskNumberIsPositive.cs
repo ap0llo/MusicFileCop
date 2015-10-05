@@ -8,8 +8,10 @@ using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Rules
 {
-    public class DiskNumberIsPostiveRule : IRule<IDisk>
+    public class DiskNumberIsPositiveRule : IRule<IDisk>
     {
+        public string Id => RuleIds.DiskNumberIsPositive;
+
         public string Description => "Disk numbers must not have the value 0";
 
         public bool IsApplicable(IDisk item) => true;

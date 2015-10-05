@@ -84,6 +84,14 @@ namespace MusicFileCop.Core
             // bind all types implementing IDefaultConfigurationProvider
             m_Kernel.Bind(x =>
                 x.FromAssembliesMatching(s_RulesAssemblyName)
+                    .IncludingNonePublicTypes()
+                    .SelectAllClasses()                    
+                    .InheritedFrom<IDefaultConfigurationProvider>()
+                    .BindAllInterfaces());
+
+            m_Kernel.Bind(x =>
+                x.FromThisAssembly()
+                    .IncludingNonePublicTypes()
                     .SelectAllClasses()
                     .InheritedFrom<IDefaultConfigurationProvider>()
                     .BindAllInterfaces());

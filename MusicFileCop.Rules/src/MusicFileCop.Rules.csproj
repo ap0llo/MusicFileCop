@@ -51,6 +51,7 @@
     <Compile Include="Rules\DiskNumberMustBeUnique.cs" />
     <Compile Include="Rules\FileName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleIds.cs" />
     <Compile Include="Rules\TrackMustHaveArtist.cs" />
     <Compile Include="Rules\TrackNameMustNotBeEmpty.cs" />
     <Compile Include="Rules\TrackNumberMustBeUnique.cs" />

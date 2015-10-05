@@ -161,9 +161,9 @@ namespace MusicFileCop.Core.Output
         void WriteToConsole(IEnumerable<IRule> violatedRules, int indentationDepth)
         {
             WriteLine("Violated Rules:", indentationDepth);
-            foreach (var ruleType in violatedRules.Select(r => r.GetType()).Distinct())
+            foreach (var ruleType in violatedRules.Distinct())
             {
-                WriteLine(ruleType.Name, indentationDepth + 1);
+                WriteLine(ruleType.Id, indentationDepth + 1);
             }
             WriteLine();
         }

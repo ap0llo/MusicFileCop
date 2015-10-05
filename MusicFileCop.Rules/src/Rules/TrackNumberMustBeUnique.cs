@@ -6,6 +6,8 @@ namespace MusicFileCop.Rules
 {
     public class TrackNumberMustBeUniqueRule : IRule<ITrack>
     {
+        public string Id => RuleIds.TrackNumberMustBeUnique;
+
         public string Description => "There must only be a single track for any number in each disk";
 
         public bool IsApplicable(ITrack item) => true;

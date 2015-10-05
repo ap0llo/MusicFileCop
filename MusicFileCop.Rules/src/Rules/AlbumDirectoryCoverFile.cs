@@ -38,6 +38,8 @@ namespace MusicFileCop.Rules
             m_ConfigurationMapper = configurationMapper;
         }
 
+        public string Id => RuleIds.AlbumDirectoryCoverFile;
+
         public string Description => "In every directory containig a album, there must be a Cover.jpg file";
         
         public bool IsApplicable(IAlbum album) => true;

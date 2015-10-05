@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MusicFileCop.Core.Configuration;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
@@ -9,18 +10,19 @@ using Ninject;
 
 namespace MusicFileCop.Core
 {
-    class ConsistencyChecker : IConsistencyChecker, IVisitor
+    [ConfigurationNamespace(ConfigurationNamespace)]
+    class ConsistencyChecker : ConsistencyCheckerBase, IConsistencyChecker, IVisitor
     {
         readonly IKernel m_Kernel;
         readonly IMetadataMapper m_MetadataMapper;
-        
+        readonly IConfigurationMapper m_ConfigurationMapper;
 
         readonly IDictionary<Type, IEnumerable<object>> m_RulesInstanceCache = new Dictionary<Type, IEnumerable<object>>();
         readonly IDictionary<Type, object> m_OutputWriterCache = new Dictionary<Type, object>(); 
         readonly ISet<ICheckable> m_VisitedNodes = new HashSet<ICheckable>();
 
 
-        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IKernel kernel)
+        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IKernel kernel, IConfigurationMapper configurationMapper)
         {
             if (fileMetadataMapper == null)
             {
@@ -30,9 +32,14 @@ namespace MusicFileCop.Core
             {
                 throw new ArgumentNullException(nameof(kernel));                
             }
+            if (configurationMapper == null)
+            {
+                throw new ArgumentNullException(nameof(configurationMapper));
+            }
 
             m_MetadataMapper = fileMetadataMapper;
             m_Kernel = kernel;
+            m_ConfigurationMapper = configurationMapper;
         }
 
 
@@ -54,7 +61,7 @@ namespace MusicFileCop.Core
 
             MarkVisited(directory);
 
-            ApplyRules(directory);
+            ApplyRules(directory, m_ConfigurationMapper.GetConfiguration(directory));
 
             foreach (var file in directory.Files)
             {
@@ -75,7 +82,7 @@ namespace MusicFileCop.Core
 
             MarkVisited(file);
 
-            ApplyRules(file);
+            ApplyRules(file, m_ConfigurationMapper.GetConfiguration(file));
 
             //TODO: IMetadataMapper should offer something like TryGet()
             try
@@ -98,7 +105,9 @@ namespace MusicFileCop.Core
 
             MarkVisited(album);
 
-            ApplyRules(album);
+
+            var configurationNodes = m_MetadataMapper.GetDirectories(album).Select(m_ConfigurationMapper.GetConfiguration);
+            ApplyRules(album, configurationNodes.ToArray());
 
             album.Artist.Accept(this);
 
@@ -117,7 +126,9 @@ namespace MusicFileCop.Core
 
             MarkVisited(artist);
 
-            ApplyRules(artist);
+            var configurationNodes = m_MetadataMapper.GetDirectories(artist).Select(m_ConfigurationMapper.GetConfiguration);
+
+            ApplyRules(artist, configurationNodes.ToArray());
 
             foreach (var album in artist.Albums)
             {
@@ -134,9 +145,11 @@ namespace MusicFileCop.Core
 
             MarkVisited(disk);
 
-            ApplyRules(disk);
+            var configurationNodes = m_MetadataMapper.GetDirectories(disk).Select(m_ConfigurationMapper.GetConfiguration);
 
-            disk?.Album.Accept(this);
+            ApplyRules(disk, configurationNodes.ToArray());
+
+            disk.Album?.Accept(this);
             foreach (var track in disk.Tracks)
             {
                 track.Accept(this);
@@ -152,7 +165,7 @@ namespace MusicFileCop.Core
 
             MarkVisited(track);
 
-            ApplyRules(track);
+            ApplyRules(track, m_ConfigurationMapper.GetConfiguration(m_MetadataMapper.GetFile(track)));
 
             track?.Disk.Accept(this);
             track?.Album.Accept(this);
@@ -161,17 +174,25 @@ namespace MusicFileCop.Core
         }
 
 
-        void ApplyRules<T>(T checkable) where T : ICheckable
+        void ApplyRules<T>(T checkable, params IConfigurationNode[] configurations) where T : ICheckable
         {
-            var rules = GetRules<T>();
+            var rules = GetRules<T>()
+                .Where(r => r.IsApplicable(checkable))
+                .Where(r => IsRuleEnabled(r, configurations));
 
-            foreach (var rule in rules.Where(r => r.IsApplicable(checkable)))
+            foreach (var rule in rules)
             {
                 if (!rule.IsConsistent(checkable))
                 {
                     GetOutputWriter<T>().WriteViolation(rule, checkable);
-                }
+                }                
             }
+        }
+
+
+        bool IsRuleEnabled(IRule rule, IEnumerable<IConfigurationNode> configurationNodes)
+        {
+            return configurationNodes.Any(c => c.GetValue<bool>(GetRuleEnableSettingsName(rule)));
         }
 
         IOutputWriter<T> GetOutputWriter<T>() where T : ICheckable
@@ -186,7 +207,7 @@ namespace MusicFileCop.Core
         }
             
             
-            IEnumerable<IRule<T>> GetRules<T>() where T : ICheckable
+        IEnumerable<IRule<T>> GetRules<T>() where T : ICheckable
         {
             if (!m_RulesInstanceCache.ContainsKey(typeof (T)))
             {

@@ -9,12 +9,12 @@ using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Rules
 {
-    public class DirectoryNameMatchesArtistName : IRule<IAlbum>
+    public class DirectoryNameMatchesArtistNameRule : IRule<IAlbum>
     {
 
         readonly IMetadataMapper m_FileMetadataMapper;
 
-        public DirectoryNameMatchesArtistName(IMetadataMapper fileMetadataMapper)
+        public DirectoryNameMatchesArtistNameRule(IMetadataMapper fileMetadataMapper)
         {
             if(fileMetadataMapper == null)
             {
@@ -23,6 +23,8 @@ namespace MusicFileCop.Rules
             this.m_FileMetadataMapper = fileMetadataMapper;
         }
 
+
+        public string Id => RuleIds.DirectoryNameMatchesArtistName;
 
         public string Description => "All album directories must be contained in directories named the same as the album artist";        
 
