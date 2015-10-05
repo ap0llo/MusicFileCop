@@ -77,6 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Private\Configuration\ConfigurationWriter.cs" />
+    <Compile Include="Private\Configuration\DefaultConfigurationNode.cs" />
     <Compile Include="Private\ConsistencyChecker\ConsistencyCheckerBase.cs" />
     <Compile Include="Private\ConsistencyChecker\ConsistencyCheckerDefaultConfigurationProvider.cs" />
     <Compile Include="DI\CoreModule.cs" />
@@ -104,6 +106,8 @@
     <Compile Include="Private\DynamicConfigurator.cs" />
     <Compile Include="Public\Configuration\IConfigurationLoader.cs" />
     <Compile Include="Public\Configuration\IConfigurationNode.cs" />
+    <Compile Include="Public\Configuration\IConfigurationWriter.cs" />
+    <Compile Include="Public\Configuration\IDefaultConfigurationNode.cs" />
     <Compile Include="Public\Configuration\IDefaultConfigurationProvider.cs" />
     <Compile Include="Public\Configuration\IMutableConfigurationNode.cs" />
     <Compile Include="Public\FileSystem\IDirectory.cs" />

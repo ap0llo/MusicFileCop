@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MusicFileCop.Core.Configuration
 {
@@ -10,6 +12,8 @@ namespace MusicFileCop.Core.Configuration
     {
         readonly string m_Prefix;
         readonly IConfigurationNode m_WrappedConfigurationNode;
+
+        public IEnumerable<string> Names => m_WrappedConfigurationNode.Names.Select(GetPrefixedName);
 
 
         public PrefixConfigurationNode(IConfigurationNode wrappedConfigurationNode, string prefix)
@@ -23,7 +27,7 @@ namespace MusicFileCop.Core.Configuration
                 throw new ArgumentNullException(nameof(prefix));
             }
 
-            if (String.IsNullOrEmpty(prefix))
+            if (string.IsNullOrEmpty(prefix))
             {
                 throw new ArgumentException("Prefix must not be empty", nameof(prefix));
             }
@@ -47,6 +51,7 @@ namespace MusicFileCop.Core.Configuration
         }
 
         public T GetValue<T>(string name) => m_WrappedConfigurationNode.GetValue<T>(GetPrefixedName(name));
+
 
 
         protected string GetPrefixedName(string name) => $"{m_Prefix}:{name}";

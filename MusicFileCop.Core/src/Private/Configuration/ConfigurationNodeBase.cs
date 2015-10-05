@@ -31,6 +31,8 @@ namespace MusicFileCop.Core.Configuration
             }
         }
 
+        public abstract IEnumerable<string> Names { get; }
+
         public bool TryGetValue<T>(string name, out T value)
         {
             if (m_ParsedValues.ContainsKey(name))

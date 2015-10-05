@@ -27,7 +27,10 @@ namespace MusicFileCop.Core.Configuration
             {
                 m_Values.Add(name, value.ToString());
             }
-        }       
+        }
+
+        public override IEnumerable<string> Names => m_Values.Keys;
+
         public override bool TryGetValue(string name, out string value) => m_Values.TryGetValue(name, out value);
 
 

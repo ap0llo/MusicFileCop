@@ -28,7 +28,7 @@ namespace MusicFileCop.Core.Test.Configuration
 
             var fileMock = MockFile("Irrelevant", filePath, null);
             
-            var configurationLoader = new ConfigurationLoader(new ConfigurationMapper(), MockConfigurationNode().Object);
+            var configurationLoader = new ConfigurationLoader(new ConfigurationMapper(), MockDefaultConfigurationNode().Object);
             var configNode = configurationLoader.LoadConfigurationFile(fileMock.Object);
 
             Assert.Equal("SomeValue", configNode.Get("SomeKey"));
@@ -54,7 +54,7 @@ namespace MusicFileCop.Core.Test.Configuration
                       
             var mapper = new ConfigurationMapper();
 
-            var configurationLoader = new ConfigurationLoader(mapper, MockConfigurationNode().Object);
+            var configurationLoader = new ConfigurationLoader(mapper, MockDefaultConfigurationNode().Object);
             configurationLoader.LoadConfiguration(MockConfigurationNode().Object, fileMock.Object);
 
             var config = mapper.GetConfiguration(fileMock.Object);
@@ -80,7 +80,7 @@ namespace MusicFileCop.Core.Test.Configuration
 
             var mapper = new ConfigurationMapper();
 
-            var configurationLoader = new ConfigurationLoader(mapper, MockConfigurationNode().Object);
+            var configurationLoader = new ConfigurationLoader(mapper, MockDefaultConfigurationNode().Object);
             configurationLoader.LoadConfiguration(MockConfigurationNode().Object, directory);
 
             var config = mapper.GetConfiguration(directory);
@@ -107,7 +107,7 @@ namespace MusicFileCop.Core.Test.Configuration
             
             var mapper = new ConfigurationMapper();
                        
-            var configurationLoader = new ConfigurationLoader(mapper, MockConfigurationNode().Object);
+            var configurationLoader = new ConfigurationLoader(mapper, MockDefaultConfigurationNode().Object);
             configurationLoader.LoadConfiguration(MockConfigurationNode().Object, directory);
 
             var fileConfig = mapper.GetConfiguration(fileMock.Object);
@@ -144,6 +144,7 @@ namespace MusicFileCop.Core.Test.Configuration
 
         Mock<IConfigurationNode> MockConfigurationNode() => new Mock<IConfigurationNode>(MockBehavior.Strict);
 
+        Mock<IDefaultConfigurationNode> MockDefaultConfigurationNode() => new Mock<IDefaultConfigurationNode>(MockBehavior.Strict);
 
         public void Dispose()
         {

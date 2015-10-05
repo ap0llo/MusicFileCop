@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Framework.ConfigurationModel;
+using TagLib.IFD.Tags;
 
 namespace MusicFileCop.Core.Configuration
 {
@@ -20,7 +22,9 @@ namespace MusicFileCop.Core.Configuration
             m_ParentNode = parentNode;
             m_Configuration = configuration;
         }
-    
+
+        public override IEnumerable<string> Names  { get { throw new NotImplementedException(); } }
+        
         public override bool TryGetValue(string name, out string value) => m_Configuration.TryGet(name, out value);
   
 

@@ -13,7 +13,7 @@ namespace MusicFileCop.Core.Configuration
         readonly IConfigurationNode m_DefaultConfiguration;
 
 
-        public ConfigurationLoader(IConfigurationMapper mapper, IConfigurationNode defaultConfiguration)
+        public ConfigurationLoader(IConfigurationMapper mapper, IDefaultConfigurationNode defaultConfiguration)
         {
             if(mapper == null)
             {

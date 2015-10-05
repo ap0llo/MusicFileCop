@@ -27,7 +27,7 @@ namespace MusicFileCop
                 configurator.CreateDynamicBindings();
 
                 var program = kernel.Get<MusicFileCop>();
-                program.Run(args[0]);
+                program.Run(args);
 
             }
 

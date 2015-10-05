@@ -22,6 +22,7 @@ namespace MusicFileCop.Core.DI
             Bind<IFileSystemLoader>().To<FileSystemLoader>();
             Bind<IMetadataLoader>().To<MetaDataLoader>();
             Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
+            Bind<IConfigurationWriter>().To<ConfigurationWriter>();
 
             Bind<StructuedOutputWriter>().ToConstant(outputWriter);
             Bind<IOutputWriter<IFile>>().ToConstant(outputWriter);
@@ -34,9 +35,10 @@ namespace MusicFileCop.Core.DI
 
             Bind<IDynamicConfigurator>().To<DynamicConfigurator>();
 
-            var defaultConfigNode = new MutableConfigurationNode();
-            Bind<IConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<ConfigurationLoader>();
-            Bind<IMutableConfigurationNode>().ToConstant(defaultConfigNode).WhenInjectedExactlyInto<DynamicConfigurator>();
+            var mutableDefaultConfigNode = new MutableConfigurationNode();
+            var defaultConfigNode = new DefaultConfigurationNode(mutableDefaultConfigNode);            
+            Bind<IMutableConfigurationNode>().ToConstant(mutableDefaultConfigNode).WhenInjectedExactlyInto<DynamicConfigurator>();
+            Bind<IDefaultConfigurationNode>().ToConstant(defaultConfigNode);
         }
     }
 }
