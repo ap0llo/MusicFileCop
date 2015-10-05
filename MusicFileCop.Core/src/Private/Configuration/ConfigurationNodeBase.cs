@@ -95,6 +95,19 @@ namespace MusicFileCop.Core.Configuration
                     throw new ArgumentException($"Value '{value}' cannot be parsed to int");
                 }
             }
+            else if (typeof (T).IsEnum)
+            {
+
+
+                try
+                {
+                    return (T) Enum.Parse(typeof(T), value, true);
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new ArgumentException($"Value '{value}' cannot be parsed to enum type {typeof(T)}", ex);                    
+                }
+            }
             else
             {
                 throw new NotSupportedException($"Type '{typeof(T)}' is not supported");
@@ -103,7 +116,7 @@ namespace MusicFileCop.Core.Configuration
 
         protected void EnsureTypeIsSupported<T>()
         {
-            if (!s_SupportedTypes.Contains(typeof (T)))
+            if (!s_SupportedTypes.Contains(typeof (T)) && !typeof(T).IsEnum)
             {
                 throw new NotSupportedException($"Type '{typeof(T)}' is not supported");
             }

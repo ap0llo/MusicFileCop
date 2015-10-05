@@ -129,6 +129,7 @@
     <Compile Include="Public\Configuration\ConfigurationNamespaceAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Public\Rules\IRule.cs" />
+    <Compile Include="Public\Severity.cs" />
     <Compile Include="Public\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

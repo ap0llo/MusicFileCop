@@ -6,7 +6,7 @@ using TagLib.IFD.Tags;
 
 namespace MusicFileCop.Core.Configuration
 {
-    class HierarchicalConfigurationNode : ConfigurationNodeBase, IConfigurationNode
+    class HierarchicalConfigurationNode : ConfigurationNodeBase
     {
         readonly IConfiguration m_Configuration;
         readonly IConfigurationNode m_ParentNode;

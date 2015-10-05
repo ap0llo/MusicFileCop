@@ -29,6 +29,7 @@ namespace MusicFileCop.Core
             foreach (var rule in rules)
             {
                 configurationNode.AddValue(GetRuleEnableSettingsName(rule), true);
+                configurationNode.AddValue(GetRuleSeveritySettingsName(rule), Severity.Warning);
             }
         }        
         
