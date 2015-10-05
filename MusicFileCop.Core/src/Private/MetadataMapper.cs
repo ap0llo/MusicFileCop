@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Net.Cache;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 
@@ -11,27 +14,39 @@ namespace MusicFileCop.Core
         readonly IDictionary<IFile, ITrack> m_FileToTrackMapping = new Dictionary<IFile, ITrack>();
         readonly IDictionary<ITrack, IFile> m_TrackToFileMapping = new Dictionary<ITrack, IFile>();
         
-        //TODO: Some kind of caching mechanism would be great
-        public IEnumerable<IDirectory> GetDirectories(IDisk disk) => GetDirectories(disk.Tracks);
+        readonly IDictionary<IDisk, IEnumerable<IDirectory>> m_DiskDirectoriesCache = new Dictionary<IDisk, IEnumerable<IDirectory>>();
+        readonly IDictionary<IArtist, IEnumerable<IDirectory>> m_ArtistDirectoriesCache = new Dictionary<IArtist, IEnumerable<IDirectory>>();
 
-        //TODO: Some kind of caching mechanism would be great
+        public IEnumerable<IDirectory> GetDirectories(IDisk disk) => ExecuteWithCaching(m_DiskDirectoriesCache, disk, d => GetDirectories(d.Tracks).ToArray());
+
+
+        public bool TryGetFile(ITrack track, out IFile file) => m_TrackToFileMapping.TryGetValue(track, out file);
+        
         public IEnumerable<IDirectory> GetDirectories(IArtist artist)
         {
-            var directories = artist.Albums.SelectMany(GetDirectories).Distinct().ToList();           
-            return CombineCommonAncestors(directories);
+            return ExecuteWithCaching(m_ArtistDirectoriesCache, artist, (IArtist a) =>
+            {
+                var directories = artist.Albums.SelectMany(GetDirectories).Distinct().ToList();           
+                return CombineCommonAncestors(directories).ToList();
+            });
         }
 
         public IEnumerable<IDirectory> GetDirectories(IAlbum album) => album.Disks.SelectMany(GetDirectories);
 
+        public bool TryGetTrack(IFile file, out ITrack track) => m_FileToTrackMapping.TryGetValue(file, out track);
+        
         public IFile GetFile(ITrack track) => m_TrackToFileMapping[track];
 
         public ITrack GetTrack(IFile file) => m_FileToTrackMapping[file];        
-
 
         public void AddMapping(ITrack track, IFile file)
         {
             m_FileToTrackMapping.Add(file, track);
             m_TrackToFileMapping.Add(track, file);
+
+            // Invalidte caches
+            m_DiskDirectoriesCache.Clear();
+            m_ArtistDirectoriesCache.Clear();
         }
 
 
@@ -68,7 +83,24 @@ namespace MusicFileCop.Core
                 return result;                
             }
 
-        } 
+        }
+
+
+
+        TRESULT ExecuteWithCaching<TPARAM, TRESULT>(IDictionary<TPARAM, TRESULT> cache, TPARAM parameter, Func<TPARAM, TRESULT> func)
+        {
+
+            if (cache.ContainsKey(parameter))
+            {
+                return cache[parameter];
+            }
+            else
+            {
+                var value = func.Invoke(parameter);
+                cache.Add(parameter, value);
+                return value;
+            }            
+        }
 
     }
 }

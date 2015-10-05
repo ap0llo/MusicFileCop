@@ -84,16 +84,12 @@ namespace MusicFileCop.Core
 
             ApplyRules(file, m_ConfigurationMapper.GetConfiguration(file));
 
-            //TODO: IMetadataMapper should offer something like TryGet()
-            try
+
+            ITrack track;
+            if (m_MetadataMapper.TryGetTrack(file, out track))
             {
-                var track = m_MetadataMapper.GetTrack(file);
                 track.Accept(this);
-            }
-            catch (KeyNotFoundException)
-            {
-                //ignore exception (no mapping found)
-            }
+            }            
         }
 
         public void Visit(IAlbum album)

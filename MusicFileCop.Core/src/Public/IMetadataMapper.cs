@@ -10,7 +10,11 @@ namespace MusicFileCop.Core
         
         ITrack GetTrack(IFile file);
 
+        bool TryGetTrack(IFile file, out ITrack track);
+
         IFile GetFile(ITrack track);
+
+        bool TryGetFile(ITrack track, out IFile file);
 
         IEnumerable<IDirectory> GetDirectories(IArtist artist);
 
