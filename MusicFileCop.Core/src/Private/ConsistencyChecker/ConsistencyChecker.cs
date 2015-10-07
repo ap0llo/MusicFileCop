@@ -7,12 +7,14 @@ using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
 using MusicFileCop.Core.Rules;
 using Ninject;
+using NLog;
 
 namespace MusicFileCop.Core
 {
     [ConfigurationNamespace(ConfigurationNamespace)]
     class ConsistencyChecker : ConsistencyCheckerBase, IConsistencyChecker, IVisitor
     {
+        readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
         readonly IKernel m_Kernel;
         readonly IMetadataMapper m_MetadataMapper;
         readonly IConfigurationMapper m_ConfigurationMapper;
@@ -45,6 +47,8 @@ namespace MusicFileCop.Core
 
         public void CheckConsistency(IDirectory directory)
         {
+            m_Logger.Info($"Starting consistency check, root directory {directory.FullPath}");
+
             m_VisitedNodes.Clear();
             m_RulesInstanceCache.Clear();
 

@@ -158,11 +158,11 @@ namespace MusicFileCop.Core.Output
         void WriteTo(TextWriter writer, IEnumerable<IRule> violatedRules, int indentationDepth)
         {
             writer.WriteIndentedLine("Violated Rules:", indentationDepth);
-            foreach (var ruleType in violatedRules.Distinct())
+            foreach (var rule in violatedRules.Distinct())
             {
-                writer.WriteIndentedLine(ruleType.Id, indentationDepth + 1);
+                writer.WriteIndentedLine(rule.Id, indentationDepth + 1);
             }
-            writer.WriteLine(writer);
+            writer.WriteLine();
         }
 
 

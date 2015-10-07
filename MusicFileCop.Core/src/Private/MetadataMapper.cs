@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace MusicFileCop.Core
     class MetadataMapper : IMetadataMapper
     {
         //TODO: Use "doublesided dictionary"
-        readonly IDictionary<IFile, ITrack> m_FileToTrackMapping = new Dictionary<IFile, ITrack>();
-        readonly IDictionary<ITrack, IFile> m_TrackToFileMapping = new Dictionary<ITrack, IFile>();
+        readonly IDictionary<IFile, ITrack> m_FileToTrackMapping = new ConcurrentDictionary<IFile, ITrack>();
+        readonly IDictionary<ITrack, IFile> m_TrackToFileMapping = new ConcurrentDictionary<ITrack, IFile>();
         
-        readonly IDictionary<IDisk, IEnumerable<IDirectory>> m_DiskDirectoriesCache = new Dictionary<IDisk, IEnumerable<IDirectory>>();
-        readonly IDictionary<IArtist, IEnumerable<IDirectory>> m_ArtistDirectoriesCache = new Dictionary<IArtist, IEnumerable<IDirectory>>();
+        readonly IDictionary<IDisk, IEnumerable<IDirectory>> m_DiskDirectoriesCache = new ConcurrentDictionary<IDisk, IEnumerable<IDirectory>>();
+        readonly IDictionary<IArtist, IEnumerable<IDirectory>> m_ArtistDirectoriesCache = new ConcurrentDictionary<IArtist, IEnumerable<IDirectory>>();
 
         public IEnumerable<IDirectory> GetDirectories(IDisk disk) => ExecuteWithCaching(m_DiskDirectoriesCache, disk, d => GetDirectories(d.Tracks).ToArray());
 

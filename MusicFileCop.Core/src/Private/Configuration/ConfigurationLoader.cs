@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Framework.ConfigurationModel;
 using MusicFileCop.Core.FileSystem;
+using NLog;
 
 namespace MusicFileCop.Core.Configuration
 {
@@ -9,6 +10,7 @@ namespace MusicFileCop.Core.Configuration
         const string s_DirectoryConfigName = "MusicFileCop.json";
         const string s_FileConfigName = "{0}.MusicFileCop.json";
 
+        readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
         readonly IConfigurationMapper m_Mapper;
         readonly IConfigurationNode m_DefaultConfiguration;
 
@@ -34,6 +36,8 @@ namespace MusicFileCop.Core.Configuration
 
         internal void LoadConfiguration(IConfigurationNode parentNode, IDirectory directory)
         {
+            m_Logger.Info($"Loading configuraiton for directory '{directory.FullPath}'");
+
             IConfigurationNode configNode;
             if (directory.FileExists(s_DirectoryConfigName))
             {
@@ -59,6 +63,8 @@ namespace MusicFileCop.Core.Configuration
 
         internal void LoadConfiguration(IConfigurationNode parentNode, IFile file)
         {
+            m_Logger.Info($"Loading configuraiton for file '{file.FullPath}'");
+
             var configFileName = String.Format(s_FileConfigName, file.NameWithExtension);
 
             IConfigurationNode configNode;

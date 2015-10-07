@@ -1,10 +1,14 @@
 ﻿using System.IO;
+using NLog;
 using IO = System.IO;
 
 namespace MusicFileCop.Core.FileSystem
 {
     class FileSystemLoader : IFileSystemLoader
     {
+
+        private readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
+
 
         public IDirectory LoadDirectory(string path)
         {        
@@ -14,6 +18,8 @@ namespace MusicFileCop.Core.FileSystem
 
         private IDirectory LoadDirectory(string path, IDirectory parent)
         {
+            m_Logger.Info($"Loading directory '{path}'");
+
             if (!IO.Directory.Exists(path))
             {
                 throw new DirectoryNotFoundException($"Could not find directory '{path}'");

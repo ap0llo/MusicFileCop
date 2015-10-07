@@ -5,6 +5,7 @@ namespace MusicFileCop.Core.Metadata
 {
     class MetadataFactory : IMetadataFactory
     {
+        readonly object m_Lock = new object();
         readonly IDictionary<string, Artist> m_Artists = new Dictionary<string, Artist>(StringComparer.InvariantCultureIgnoreCase);        
 
 
@@ -17,15 +18,18 @@ namespace MusicFileCop.Core.Metadata
                 name = String.Empty;
             }
 
-            if(!m_Artists.ContainsKey(name))
-            {
-                var newArtist = new Artist()
+            lock (m_Lock)
+            {                
+                if(!m_Artists.ContainsKey(name))
                 {
-                    Name = name
-                };
-                m_Artists.Add(name, newArtist);
+                    var newArtist = new Artist()
+                    {
+                        Name = name
+                    };
+                    m_Artists.Add(name, newArtist);
+                }
+                return m_Artists[name];
             }
-            return m_Artists[name];
         }
 
         public IAlbum GetAlbum(string albumArtist, string albumName, int releaseYear) => GetAlbumInternal(albumArtist, albumName, releaseYear);
@@ -39,6 +43,9 @@ namespace MusicFileCop.Core.Metadata
                 albumName = String.Empty;
             }
 
+            lock (m_Lock)
+            {
+                
             if(!artist.AlbumExists(albumName, releaseYear))
             {
                 var album = new Album()
@@ -50,6 +57,7 @@ namespace MusicFileCop.Core.Metadata
                 artist.AddAlbum(album);
             }
             return artist.GetAlbum(albumName, releaseYear);
+            }
         }
 
         public IDisk GetDisk(string albumArtist, string albumName, int releaseYear, int diskNumber) => GetDiskInternal(albumArtist, albumArtist, releaseYear, diskNumber);
@@ -58,6 +66,10 @@ namespace MusicFileCop.Core.Metadata
         {
             var album = GetAlbumInternal(albumArtist, albumName, releaseYear);
 
+
+            lock (m_Lock)
+            {
+                
             if(!album.DiskExists(diskNumber))
             {
                 var disk = new Disk()
@@ -69,6 +81,7 @@ namespace MusicFileCop.Core.Metadata
             }
 
             return album.GetDisk(diskNumber);
+            }
         }
 
         public ITrack GetTrack(string albumArtist, string albumName, int releaseYear, int diskNumber, int trackNumber, string name, string artist)
@@ -82,7 +95,10 @@ namespace MusicFileCop.Core.Metadata
                 Name = name == null ? "" : name,
                 TrackNumber = trackNumber
             };
-            disk.AddTrack(track);
+            lock (disk)
+            {
+            disk.AddTrack(track);                
+            }
 
             return track;
         }
