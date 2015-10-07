@@ -20,32 +20,32 @@ namespace MusicFileCop.Core.Output
     {
 
 
-        public void WriteViolation(IRule<IFile> violatedRule, IFile file)
+        public void WriteViolation(IRule<IFile> violatedRule, Severity severity, IFile file)
         {
            Console.WriteLine($"File {file.FullPath} violates Rule {violatedRule.GetType().Name}");
         }
 
-        public void WriteViolation(IRule<IDirectory> violatedRule, IDirectory directory)
+        public void WriteViolation(IRule<IDirectory> violatedRule, Severity severity, IDirectory directory)
         {
             Console.WriteLine($"Directory {directory.FullPath} violates Rule {violatedRule.GetType().Name}");
         }
 
-        public void WriteViolation(IRule<IArtist> violatedRule, IArtist artist)
+        public void WriteViolation(IRule<IArtist> violatedRule, Severity severity, IArtist artist)
         {
             Console.WriteLine($"Artist '{artist.Name}' violates Rule {violatedRule.GetType().Name}");
         }
 
-        public void WriteViolation(IRule<IAlbum> violatedRule, IAlbum album)
+        public void WriteViolation(IRule<IAlbum> violatedRule, Severity severity, IAlbum album)
         {
             Console.WriteLine($"Album '{album.Name}' by '{album.Artist.Name}' violates Rule {violatedRule.GetType().Name}");
         }
 
-        public void WriteViolation(IRule<IDisk> violatedRule, IDisk disk)
+        public void WriteViolation(IRule<IDisk> violatedRule, Severity severity, IDisk disk)
         {
             Console.WriteLine($"Disk {disk.DiskNumber} from Album '{disk.Album.Name}' by '{disk.Album.Artist.Name}' violates Rule {violatedRule.GetType().Name}");
         }
 
-        public void WriteViolation(IRule<ITrack> violatedRule, ITrack track)
+        public void WriteViolation(IRule<ITrack> violatedRule, Severity severity, ITrack track)
         {
             Console.WriteLine($"Track {track.Disk.DiskNumber}.{track.TrackNumber} ('{track.Name}') from Album '{track.Album.Name}' by '{track.Album.Artist.Name}' violates Rule {violatedRule.GetType().Name}");
         }

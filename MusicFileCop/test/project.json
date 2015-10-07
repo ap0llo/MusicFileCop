@@ -8,7 +8,6 @@
     "xunit.core": "2.0.0",
     "xunit.extensibility.core": "2.0.0",
     "xunit.runner.console": "2.0.0",
-    "xunit.runner.msbuild": "2.0.0",
     "xunit.runner.visualstudio": "2.0.1"
   },
   "frameworks": {

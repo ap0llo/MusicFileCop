@@ -35,7 +35,7 @@ namespace MusicFileCop.Core.Output
         }
 
 
-        public void WriteViolation(IRule<IAlbum> violatedRule, IAlbum album)
+        public void WriteViolation(IRule<IAlbum> violatedRule, Severity severity, IAlbum album)
         {
             foreach (var directory in m_MetadataMapper.GetDirectories(album))
             {
@@ -43,7 +43,7 @@ namespace MusicFileCop.Core.Output
             }
         }
 
-        public void WriteViolation(IRule<IArtist> violatedRule, IArtist artist)
+        public void WriteViolation(IRule<IArtist> violatedRule, Severity severity, IArtist artist)
         {
             foreach (var directory in m_MetadataMapper.GetDirectories(artist))
             {
@@ -51,12 +51,12 @@ namespace MusicFileCop.Core.Output
             }
         }
 
-        public void WriteViolation(IRule<IDirectory> violatedRule, IDirectory item)
+        public void WriteViolation(IRule<IDirectory> violatedRule, Severity severity, IDirectory item)
         {
             AddRuleViolation(item, violatedRule);
         }
 
-        public void WriteViolation(IRule<IDisk> violatedRule, IDisk disk)
+        public void WriteViolation(IRule<IDisk> violatedRule, Severity severity, IDisk disk)
         {
             foreach (var directory in m_MetadataMapper.GetDirectories(disk))
             {
@@ -64,12 +64,12 @@ namespace MusicFileCop.Core.Output
             }
         }
 
-        public void WriteViolation(IRule<IFile> violatedRule, IFile item)
+        public void WriteViolation(IRule<IFile> violatedRule, Severity severity, IFile item)
         {
             AddRuleViolation(item, violatedRule);
         }
 
-        public void WriteViolation(IRule<ITrack> violatedRule, ITrack track)
+        public void WriteViolation(IRule<ITrack> violatedRule, Severity severity, ITrack track)
         {
             var file = m_MetadataMapper.GetFile(track);
             AddRuleViolation(file, violatedRule);

@@ -180,7 +180,9 @@ namespace MusicFileCop.Core
             {
                 if (!rule.IsConsistent(checkable))
                 {
-                    GetOutputWriter<T>().WriteViolation(rule, checkable);
+                    var severity = configurations.Select(c => c.GetValue<Severity>(GetRuleSeveritySettingsName(rule))).Max();
+
+                    GetOutputWriter<T>().WriteViolation(rule, severity, checkable);
                 }                
             }
         }
