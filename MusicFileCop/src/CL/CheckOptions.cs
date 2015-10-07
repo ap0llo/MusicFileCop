@@ -8,5 +8,8 @@ namespace MusicFileCop.CL
         [Option(Required = true, HelpText = "The path of the directory to seach for music files and execute the consistency check on")]
         public string Path { get; set; }
 
+
+        [Option("out", Required = true)]
+        public string OutputFile { get; set; }
     }
 }

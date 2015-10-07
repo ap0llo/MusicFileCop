@@ -13,7 +13,7 @@ namespace MusicFileCop.Core.DI
         public override void Load()
         {        
             var metadataMapper = new MetadataMapper();
-            var outputWriter = new StructuedOutputWriter(metadataMapper);
+            var outputWriter = new StructuedTextOutputWriter(metadataMapper);
 
             Bind<IConsistencyChecker>().To<ConsistencyChecker>();
             Bind<IMetadataMapper>().ToConstant(metadataMapper);
@@ -24,7 +24,9 @@ namespace MusicFileCop.Core.DI
             Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
             Bind<IConfigurationWriter>().To<ConfigurationWriter>();
 
-            Bind<StructuedOutputWriter>().ToConstant(outputWriter);
+
+            Bind<StructuedTextOutputWriter>().ToConstant(outputWriter);
+            Bind<ITextOutputWriter>().ToConstant(outputWriter);
             Bind<IOutputWriter<IFile>>().ToConstant(outputWriter);
             Bind<IOutputWriter<IDirectory>>().ToConstant(outputWriter);
             Bind<IOutputWriter<IArtist>>().ToConstant(outputWriter);

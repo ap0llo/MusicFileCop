@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
@@ -7,31 +8,27 @@ using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Core.Output
 {
-    class StructuedOutputWriter :
+    class StructuedTextOutputWriter :
         IOutputWriter<IFile>,
         IOutputWriter<IDirectory>,
         IOutputWriter<IArtist>,
         IOutputWriter<IAlbum>,
         IOutputWriter<IDisk>,
-        IOutputWriter<ITrack>, IDisposable
+        IOutputWriter<ITrack>,
+        ITextOutputWriter
     {
         readonly IMetadataMapper m_MetadataMapper;
         readonly IDictionary<IDirectory, List<IRule>> m_RuleViolationsByDirectory = new Dictionary<IDirectory, List<IRule>>();
         readonly IDictionary<IFile, List<IRule>> m_RuleViolationsByFile = new Dictionary<IFile, List<IRule>>();
 
 
-        public StructuedOutputWriter(IMetadataMapper metadataMapper)
+        public StructuedTextOutputWriter(IMetadataMapper metadataMapper)
         {
             if (metadataMapper == null)
             {
                 throw new ArgumentNullException(nameof(metadataMapper));
             }
             m_MetadataMapper = metadataMapper;
-        }
-
-        public void Dispose()
-        {
-            WriteToConsole();
         }
 
 
@@ -115,7 +112,7 @@ namespace MusicFileCop.Core.Output
         }
 
 
-        void WriteToConsole()
+        public void WriteTo(TextWriter writer)
         {
             var roots = m_RuleViolationsByDirectory.Keys.Select(GetRoot)
                 .Union(m_RuleViolationsByFile.Keys.Select(GetRoot))
@@ -123,49 +120,49 @@ namespace MusicFileCop.Core.Output
 
             foreach (var rootDirectory in roots)
             {
-                WriteToConsole(rootDirectory, 0);
+                WriteTo(writer, rootDirectory, 0);
             }
         }
 
-        void WriteToConsole(IDirectory directory, int indentationDepth)
+        void WriteTo(TextWriter writer, IDirectory directory, int indentationDepth)
         {
             var violations = GetRuleViolations(directory).ToList();
             if (violations.Any())
             {
-                WriteLine(directory.FullPath, indentationDepth);
-                WriteLine();
-                WriteToConsole(violations, indentationDepth + 1);
+                writer.WriteIndentedLine(directory.FullPath, indentationDepth);
+                writer.WriteLine();
+                WriteTo(writer, violations, indentationDepth + 1);
             }
 
             foreach (var file in directory.Files)
             {
-                WriteToConsole(file, indentationDepth + 1);
+                WriteTo(writer, file, indentationDepth + 1);
             }
 
             foreach (var dir in directory.Directories)
             {
-                WriteToConsole(dir, indentationDepth + 1);
+                WriteTo(writer, dir, indentationDepth + 1);
             }
         }
 
-        void WriteToConsole(IFile file, int indentationDepth)
+        void WriteTo(TextWriter writer, IFile file, int indentationDepth)
         {
             var violations = GetRuleViolations(file).ToList();
             if (violations.Any())
             {
-                WriteLine(file.FullPath, indentationDepth);
-                WriteToConsole(violations, indentationDepth + 1);
+                writer.WriteIndentedLine(file.FullPath, indentationDepth);
+                WriteTo(writer, violations, indentationDepth + 1);
             }
         }
 
-        void WriteToConsole(IEnumerable<IRule> violatedRules, int indentationDepth)
+        void WriteTo(TextWriter writer, IEnumerable<IRule> violatedRules, int indentationDepth)
         {
-            WriteLine("Violated Rules:", indentationDepth);
+            writer.WriteIndentedLine("Violated Rules:", indentationDepth);
             foreach (var ruleType in violatedRules.Distinct())
             {
-                WriteLine(ruleType.Id, indentationDepth + 1);
+                writer.WriteIndentedLine(ruleType.Id, indentationDepth + 1);
             }
-            WriteLine();
+            writer.WriteLine(writer);
         }
 
 
@@ -179,17 +176,6 @@ namespace MusicFileCop.Core.Output
         }
 
         IDirectory GetRoot(IFile file) => GetRoot(file.Directory);
-
-
-        void WriteLine() => Console.WriteLine();
-
-        void WriteLine(string message, int indentationDepth)
-        {
-            var prefix = indentationDepth > 0
-                ? Enumerable.Range(0, indentationDepth).Select(x => "  ").Aggregate((a, b) => a + b)
-                : "";
-
-            Console.WriteLine(prefix + message);
-        }
+       
     }
 }

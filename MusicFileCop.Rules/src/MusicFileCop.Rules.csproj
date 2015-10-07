@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Rules\AlbumMustHaveArtist.cs" />
     <Compile Include="Rules\AlbumNameMustNotBeEmpty.cs" />
+    <Compile Include="Rules\AlbumReleaseYear.cs" />
     <Compile Include="Rules\ArtistNameMustNotBeEmpty.cs" />
     <Compile Include="Rules\DirectoryMatchesAlbumName.cs" />
     <Compile Include="Rules\AlbumDirectoryCoverFile.cs" />

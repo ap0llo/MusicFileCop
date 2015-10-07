@@ -66,9 +66,10 @@
     <Compile Include="Private\Metadata\MetadataLoader.cs" />
     <Compile Include="Private\Metadata\Track.cs" />
     <Compile Include="Private\Output\ConsoleOutputWriter.cs" />
-    <Compile Include="Private\Output\StructuedOutputWriter.cs" />
+    <Compile Include="Private\Output\StructuedTextOutputWriter.cs" />
     <Compile Include="Private\PrefixConfigurationMapper.cs" />
     <Compile Include="Private\DynamicConfigurator.cs" />
+    <Compile Include="Private\TextWriterExtensions.cs" />
     <Compile Include="Public\Configuration\IConfigurationLoader.cs" />
     <Compile Include="Public\Configuration\IConfigurationNode.cs" />
     <Compile Include="Public\Configuration\IConfigurationWriter.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Public\IConsistencyChecker.cs" />
     <Compile Include="Public\IMetadataMapper.cs" />
     <Compile Include="Public\IVisitor.cs" />
+    <Compile Include="Public\Output\ITextOutputWriter.cs" />
     <Compile Include="Public\Output\IOutputWriter.cs" />
     <Compile Include="Public\Metadata\IAlbum.cs" />
     <Compile Include="Public\Metadata\IArtist.cs" />
@@ -98,7 +100,7 @@
     <Compile Include="Public\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />    
+    <None Include="app.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup />

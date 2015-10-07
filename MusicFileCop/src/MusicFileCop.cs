@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,6 +11,7 @@ using MusicFileCop.Core;
 using MusicFileCop.Core.Configuration;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
+using MusicFileCop.Core.Output;
 
 
 namespace MusicFileCop
@@ -23,10 +25,11 @@ namespace MusicFileCop
         readonly IConsistencyChecker m_ConsistencyChecker;
         readonly IConfigurationNode m_DefaultConfiguration;
         readonly IConfigurationWriter m_ConfigWriter;
+        readonly ITextOutputWriter m_OutputWriter;
 
         public MusicFileCop(IFileSystemLoader fileSystemLoader, IConfigurationLoader configurationLoader,
                             IMetadataLoader metadataLoader, IConsistencyChecker consistencyChecker, 
-                            IDefaultConfigurationNode defaultConfiguration, IConfigurationWriter configWriter)
+                            IDefaultConfigurationNode defaultConfiguration, IConfigurationWriter configWriter, ITextOutputWriter outputWriter)
         {
             if (fileSystemLoader == null)
             {
@@ -52,6 +55,10 @@ namespace MusicFileCop
             {
                 throw new ArgumentNullException(nameof(configWriter));
             }
+            if (outputWriter == null)
+            {
+                throw new ArgumentNullException(nameof(outputWriter));
+            }
 
             this.m_FileSystemLoader = fileSystemLoader;
             this.m_ConfigLoader = configurationLoader;
@@ -59,6 +66,7 @@ namespace MusicFileCop
             this.m_ConsistencyChecker = consistencyChecker;
             this.m_DefaultConfiguration = defaultConfiguration;
             m_ConfigWriter = configWriter;
+            m_OutputWriter = outputWriter;
         }
 
 
@@ -68,7 +76,7 @@ namespace MusicFileCop
             return Parser.Default.ParseArguments<CheckOptions, ExportDefaultConfigOptions>(args).MapResult(
                 (CheckOptions options) =>
                     {
-                        if (System.IO.Directory.Exists(options.Path))
+                        if (!System.IO.Directory.Exists(options.Path))
                         {
                             Console.Error.Write($"Directory '{options.Path}'not found");
                             return 1;
@@ -83,6 +91,11 @@ namespace MusicFileCop
                         m_MetadataLoader.LoadMetadata(rootDirectory);
 
                         m_ConsistencyChecker.CheckConsistency(rootDirectory);
+
+                        using (var stream = new StreamWriter(System.IO.File.Open(options.OutputFile, FileMode.Create)))
+                        {
+                            m_OutputWriter.WriteTo(stream);
+                        }
 
                         return 0;
                     },
