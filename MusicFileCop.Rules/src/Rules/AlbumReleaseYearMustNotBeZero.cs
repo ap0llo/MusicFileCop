@@ -3,7 +3,7 @@ using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Rules
 {
-    public class AlbumReleaseYear : IRule<IAlbum>
+    public class AlbumReleaseYearRule : IRule<IAlbum>
     {
         public string Id => RuleIds.AlbumReleaseYearMustNotBeZero;
 

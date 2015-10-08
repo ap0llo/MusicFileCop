@@ -17,6 +17,7 @@ namespace MusicFileCop.Core
         
         readonly IDictionary<IDisk, IEnumerable<IDirectory>> m_DiskDirectoriesCache = new ConcurrentDictionary<IDisk, IEnumerable<IDirectory>>();
         readonly IDictionary<IArtist, IEnumerable<IDirectory>> m_ArtistDirectoriesCache = new ConcurrentDictionary<IArtist, IEnumerable<IDirectory>>();
+        readonly IDictionary<IAlbum, IEnumerable<IDirectory>> m_AlbumDirectoriesCache = new ConcurrentDictionary<IAlbum, IEnumerable<IDirectory>>(); 
 
         public IEnumerable<IDirectory> GetDirectories(IDisk disk) => ExecuteWithCaching(m_DiskDirectoriesCache, disk, d => GetDirectories(d.Tracks).ToArray());
 
@@ -32,7 +33,7 @@ namespace MusicFileCop.Core
             });
         }
 
-        public IEnumerable<IDirectory> GetDirectories(IAlbum album) => album.Disks.SelectMany(GetDirectories);
+        public IEnumerable<IDirectory> GetDirectories(IAlbum album) => ExecuteWithCaching(m_AlbumDirectoriesCache, album, a => a.Disks.SelectMany(GetDirectories).Distinct());
 
         public bool TryGetTrack(IFile file, out ITrack track) => m_FileToTrackMapping.TryGetValue(file, out track);
         

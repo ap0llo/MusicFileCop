@@ -29,5 +29,7 @@
         public const string ArtistNameMustNotBeEmpty = nameof(ArtistNameMustNotBeEmpty);
 
         public const string AlbumReleaseYearMustNotBeZero = nameof(AlbumReleaseYearMustNotBeZero);
+
+        public const string SingleAlbumDirectory = nameof(SingleAlbumDirectory);        
     }
 }

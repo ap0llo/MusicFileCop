@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MusicFileCop.Core.FileSystem;
 using NLog;
 using TagLib;
@@ -12,10 +13,11 @@ namespace MusicFileCop.Core.Metadata
     {
         static readonly ISet<string> s_MusicFileExtensions = new HashSet<string>(new[] { ".mp3" }, StringComparer.InvariantCultureIgnoreCase);
 
-        private readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
+        readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
 
         readonly IMetadataFactory m_MetadataFactory;
         readonly IMetadataMapper m_FileMetadataMapper;
+
 
         public MetaDataLoader(IMetadataFactory metadataFactory, IMetadataMapper fileMetadataMapper)
         {
@@ -24,17 +26,20 @@ namespace MusicFileCop.Core.Metadata
             if (fileMetadataMapper == null)
                 throw new ArgumentNullException(nameof(fileMetadataMapper));
 
-            this.m_MetadataFactory = metadataFactory;
-            this.m_FileMetadataMapper = fileMetadataMapper;
+            m_MetadataFactory = metadataFactory;
+            m_FileMetadataMapper = fileMetadataMapper;
         }
+
 
         public void LoadMetadata(IDirectory directory)
         {
             var mediaFiles = directory.Files.Where(file => s_MusicFileExtensions.Contains(file.Extension));
 
-            mediaFiles.AsParallel().WithDegreeOfParallelism(20).ForAll(LoadMetadata);
-           
-            directory.Directories.AsParallel().WithDegreeOfParallelism(20).ForAll(LoadMetadata);
+            var fileTask = Task.Factory.StartNew(() => mediaFiles.AsParallel().WithDegreeOfParallelism(20).ForAll(LoadMetadata));
+            var directoryTask = Task.Factory.StartNew(() => directory.Directories.AsParallel().WithDegreeOfParallelism(20).ForAll(LoadMetadata));
+        
+            fileTask.Wait();
+            directoryTask.Wait();
 
         }
 
