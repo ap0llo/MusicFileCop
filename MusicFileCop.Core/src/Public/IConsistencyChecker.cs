@@ -6,7 +6,7 @@ namespace MusicFileCop.Core
     {
 
         /// <summary>
-        /// Recursivley checks all items wihtin the specified directory for consistency
+        /// Recursively checks all items within the specified directory for consistency
         /// </summary>
         void CheckConsistency(IDirectory directory);
       

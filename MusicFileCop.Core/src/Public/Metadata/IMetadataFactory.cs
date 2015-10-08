@@ -9,7 +9,7 @@
         IArtist GetArtist(string name);
 
         /// <summary>
-        /// Gets or creates the specifed album for the specifed artist (will create the artist if necessary)
+        /// Gets or creates the specified album for the specified artist (will create the artist if necessary)
         /// </summary>        
         IAlbum GetAlbum(string albumArtist, string albumName, int releaseYear);    
 

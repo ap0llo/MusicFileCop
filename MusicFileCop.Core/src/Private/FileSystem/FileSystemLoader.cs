@@ -9,7 +9,7 @@ namespace MusicFileCop.Core.FileSystem
         readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Recursivley loads the specified directory
+        /// Recursively loads the specified directory
         /// </summary>
         public IDirectory LoadDirectory(string path) => LoadDirectory(path, null);
 

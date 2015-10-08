@@ -38,12 +38,12 @@ namespace MusicFileCop.Core.Configuration
         /// </summary>
         internal void LoadConfiguration(IConfigurationNode parentNode, IDirectory directory)
         {
-            m_Logger.Info($"Loading configuraiton for directory '{directory.FullPath}'");
+            m_Logger.Info($"Loading configuration for directory '{directory.FullPath}'");
 
             // determine configuration node for directory
             IConfigurationNode configNode;
 
-            // config file present in direcotry => create new node
+            // config file present in directory => create new node
             if (directory.FileExists(s_DirectoryConfigName))
             {
                 configNode = new HierarchicalConfigurationNode(parentNode, LoadConfigurationFile(directory.GetFile(s_DirectoryConfigName)));
@@ -74,13 +74,13 @@ namespace MusicFileCop.Core.Configuration
         /// </summary>
         internal void LoadConfiguration(IConfigurationNode parentNode, IFile file)
         {
-            m_Logger.Info($"Loading configuraiton for file '{file.FullPath}'");
+            m_Logger.Info($"Loading configuration for file '{file.FullPath}'");
 
             // determine the configuration node to associate with the file
             IConfigurationNode configNode;
             var configFileName = String.Format(s_FileConfigName, file.NameWithExtension);
 
-            // there is a file-specific configuration file => create new confg node
+            // there is a file-specific configuration file => create new config node
             if (file.Directory.FileExists(configFileName))
             {
                 configNode = new HierarchicalConfigurationNode(parentNode, LoadConfigurationFile(file.Directory.GetFile(configFileName)));

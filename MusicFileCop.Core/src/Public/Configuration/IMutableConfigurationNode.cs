@@ -6,8 +6,8 @@
         /// <summary>
         /// Adds the specified key value pair to the configuration node.
         /// 
-        /// If a setting with the specified name already exists, the exisiting value will be replaced with 
-        /// the specifed value
+        /// If a setting with the specified name already exists, the existing value will be replaced with 
+        /// the specified value
         /// </summary>
         /// <typeparam name="T">The type of the value to add to the node</typeparam>
         /// <param name="name">The name of the value to add</param>

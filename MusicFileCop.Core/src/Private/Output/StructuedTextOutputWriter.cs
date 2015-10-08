@@ -46,7 +46,7 @@ namespace MusicFileCop.Core.Output
 
         public void WriteViolation(IRule<IArtist> violatedRule, Severity severity, IArtist artist)
         {
-            // add violations to all directories contain files that are from this aritst
+            // add violations to all directories contain files that are from this artist
             foreach (var directory in m_MetadataMapper.GetDirectories(artist))
             {
                 AddRuleViolation(directory, violatedRule);

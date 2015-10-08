@@ -11,7 +11,7 @@
         string ConfigurationNamespace { get; }
 
         /// <summary>
-        /// Offers the provider to add its values to the default configuraiton
+        /// Offers the provider to add its values to the default configuration
         /// (Will be automatically called at program startup)
         /// </summary>
         /// <param name="configurationNode"></param>

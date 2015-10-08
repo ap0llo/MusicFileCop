@@ -5,7 +5,7 @@ using MusicFileCop.Core.FileSystem;
 namespace MusicFileCop.Core
 {
     /// <summary>
-    /// Configuration mapper that maps wraps all configuraiton nodes on a <see cref="PrefixConfigurationNode"/> before returning it
+    /// Configuration mapper that maps wraps all configuration nodes on a <see cref="PrefixConfigurationNode"/> before returning it
     /// </summary>
     class PrefixConfigurationMapper : IConfigurationMapper
     {
@@ -36,7 +36,7 @@ namespace MusicFileCop.Core
         {
             //TODO: cache configuration node objects
           
-            // get configuraiton node from the actual mapper
+            // get configuration node from the actual mapper
             var actualConfiguration = m_InnerMapper.GetConfiguration(directory);
 
             // wrap node into PrefixConfigurationNode
@@ -47,7 +47,7 @@ namespace MusicFileCop.Core
         {
             //TODO: cache configuration node objects
             
-            // get configuraiton node from the actual mapper
+            // get configuration node from the actual mapper
             var actualConfiguration = m_InnerMapper.GetConfiguration(file);
 
             // wrap node into PrefixConfigurationNode

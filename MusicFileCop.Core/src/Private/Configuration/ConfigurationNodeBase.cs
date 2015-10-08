@@ -15,7 +15,7 @@ namespace MusicFileCop.Core.Configuration
             typeof (int)
         };
 
-        // cache for parsed vaues
+        // cache for parsed values
         readonly IDictionary<string, object> m_ParsedValues = new Dictionary<string, object>();
 
 

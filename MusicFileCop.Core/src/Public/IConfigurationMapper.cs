@@ -4,7 +4,7 @@ using MusicFileCop.Core.FileSystem;
 namespace MusicFileCop.Core
 {
     /// <summary>
-    /// Maper to retrieve configuration for a directory or file
+    /// Mapper to retrieve configuration for a directory or file
     /// </summary>
     public interface IConfigurationMapper
     {

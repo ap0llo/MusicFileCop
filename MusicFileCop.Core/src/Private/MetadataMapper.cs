@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Net.Cache;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 
@@ -44,7 +42,7 @@ namespace MusicFileCop.Core
             m_FileToTrackMapping.Add(file, track);
             m_TrackToFileMapping.Add(track, file);
 
-            // Invalidte caches
+            // Invalidate caches
             m_DiskDirectoriesCache.Clear();
             m_ArtistDirectoriesCache.Clear();
         }

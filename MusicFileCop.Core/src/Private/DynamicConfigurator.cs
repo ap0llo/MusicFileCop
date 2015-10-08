@@ -95,7 +95,7 @@ namespace MusicFileCop.Core
                     .InheritedFrom<IDefaultConfigurationProvider>()
                     .BindAllInterfaces());
 
-            // get instances of all configuraiton providers
+            // get instances of all configuration providers
             var defaultConfigurations = m_Kernel.GetAll<IDefaultConfigurationProvider>();
 
             // call configure on all providers

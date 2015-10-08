@@ -38,7 +38,7 @@ namespace MusicFileCop.Core.DI
 
             Bind<IDynamicConfigurator>().To<DynamicConfigurator>();
 
-            // default configuraiton node (only a single instance)
+            // default configuration node (only a single instance)
             var mutableDefaultConfigNode = new MutableConfigurationNode();
             var defaultConfigNode = new DefaultConfigurationNode(mutableDefaultConfigNode);            
 

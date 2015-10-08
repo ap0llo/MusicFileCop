@@ -18,20 +18,20 @@ namespace MusicFileCop.Core.Rules
     }
 
     /// <summary>
-    /// Interface to be implemented by all rule class.
-    /// Classes implementing this interface will be automatically dicovered and instantiated if they are required for the consistency check
+    /// Interface to be implemented by all rule classes.
+    /// Classes implementing this interface will be automatically discovered and instantiated if they are required for the consistency check
     /// </summary>
     /// <typeparam name="T">The type of item this rule checks</typeparam>
     public interface IRule<T> : IRule where T : ICheckable
     {     
         /// <summary>
-        /// Determines wheter this rule applies to the concrete item.
+        /// Determines whether this rule applies to the concrete item.
         /// If rule is not applicable, IsConsistent() will not be called
         /// </summary>
         bool IsApplicable(T item);
 
         /// <summary>
-        /// Checks whether the spcified item is consistent with this rule
+        /// Checks whether the specified item is consistent with this rule
         /// </summary>
         bool IsConsistent(T item);
     }

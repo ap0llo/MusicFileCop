@@ -184,14 +184,14 @@ namespace MusicFileCop.Core
         /// </summary>
         void ApplyRules<T>(T checkable, params IConfigurationNode[] configurations) where T : ICheckable
         {
-            // get all rules for the type, filter out rules that are disabled or not applicate
+            // get all rules for the type, filter out rules that are disabled or not applicable
             var rules = m_RuleSet.GetRules<T>()
                 .Where(r => IsRuleEnabled(r, configurations))
                 .Where(r => r.IsApplicable(checkable));
 
             foreach (var rule in rules)
             {
-                // if a violation was found, write a violatioion to the output writer
+                // if a violation was found, write a violation to the output writer
                 if (!rule.IsConsistent(checkable))
                 {
                     var severity = configurations.Select(c => c.GetValue<Severity>(GetRuleSeveritySettingsName(rule))).Max();

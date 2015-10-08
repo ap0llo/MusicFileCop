@@ -6,7 +6,7 @@ namespace MusicFileCop.Core
 {
 
     /// <summary>
-    /// Mapper to get filesystem objects for metadata object and vice versa
+    /// Mapper to get file system objects for metadata object and vice versa
     /// </summary>
     public interface IMetadataMapper
     {

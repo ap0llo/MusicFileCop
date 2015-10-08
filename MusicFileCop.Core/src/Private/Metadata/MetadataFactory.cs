@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MusicFileCop.Core.Metadata
 {
     /// <summary>
-    ///     Implementation of <see cref="IMetadataFactory" /> Thar reuses instances of IAlbum, IDisk and IArtist to create a
+    ///     Implementation of <see cref="IMetadataFactory" /> that reuses instances of IAlbum, IDisk and IArtist to create a
     ///     usable graph of metadata
     /// </summary>
     internal class MetadataFactory : IMetadataFactory

@@ -9,7 +9,7 @@ namespace MusicFileCop.Rules
     {
         public string Id => RuleIds.DiskNumberMustBeUnique;
 
-        public string Description => "There must only be a single track for any number in each album";
+        public string Description => "There must only be a single disk for any number in each album";
 
         public bool IsApplicable(IDisk item) => true;
 
