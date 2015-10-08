@@ -20,8 +20,7 @@ namespace MusicFileCop
 {
     class MusicFileCop
     {
-
-        readonly IKernel m_Kernel;
+        
         readonly IFileSystemLoader m_FileSystemLoader;
         readonly IConfigurationLoader m_ConfigLoader;
         readonly IMetadataLoader m_MetadataLoader;
@@ -29,10 +28,11 @@ namespace MusicFileCop
         readonly IConfigurationNode m_DefaultConfiguration;
         readonly IConfigurationWriter m_ConfigWriter;
         readonly ITextOutputWriter m_OutputWriter;
+        readonly IRuleSet m_RuleSet;
 
         public MusicFileCop(IFileSystemLoader fileSystemLoader, IConfigurationLoader configurationLoader,
                             IMetadataLoader metadataLoader, IConsistencyChecker consistencyChecker, 
-                            IDefaultConfigurationNode defaultConfiguration, IConfigurationWriter configWriter, ITextOutputWriter outputWriter, IKernel kernel)
+                            IDefaultConfigurationNode defaultConfiguration, IConfigurationWriter configWriter, ITextOutputWriter outputWriter, IRuleSet ruleSet)
         {
             if (fileSystemLoader == null)
             {
@@ -62,11 +62,11 @@ namespace MusicFileCop
             {
                 throw new ArgumentNullException(nameof(outputWriter));
             }
-            if (kernel == null)
+            if (ruleSet == null)
             {
-                throw new ArgumentNullException(nameof(kernel));
+                throw new ArgumentNullException(nameof(ruleSet));
             }
-
+           
             this.m_FileSystemLoader = fileSystemLoader;
             this.m_ConfigLoader = configurationLoader;
             this.m_MetadataLoader = metadataLoader;
@@ -74,7 +74,7 @@ namespace MusicFileCop
             this.m_DefaultConfiguration = defaultConfiguration;
             m_ConfigWriter = configWriter;
             m_OutputWriter = outputWriter;
-            m_Kernel = kernel;
+            m_RuleSet = ruleSet;
         }
 
 
@@ -113,9 +113,8 @@ namespace MusicFileCop
                     return 0;
                 },
                 (ListRulesOptions opts) =>
-                {
-                    var rules = m_Kernel.GetAll<IRule>();
-                    foreach (var rule in rules)
+                {                    
+                    foreach (var rule in m_RuleSet.AllRules)
                     {
                         Console.WriteLine();
 

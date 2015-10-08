@@ -8,16 +8,15 @@ namespace MusicFileCop.Core
 {
     class ConsistencyCheckerDefaultConfigurationProvider : ConsistencyCheckerBase, IDefaultConfigurationProvider
     {
-        private readonly IKernel m_Kernel;
+        readonly IRuleSet m_RuleSet;        
 
-        public ConsistencyCheckerDefaultConfigurationProvider(IKernel kernel)
+        public ConsistencyCheckerDefaultConfigurationProvider(IRuleSet ruleSet)
         {
-            if (kernel == null)
+            if (ruleSet == null)
             {
-                throw new ArgumentNullException(nameof(kernel));
+                throw new ArgumentNullException(nameof(ruleSet));
             }
-
-            m_Kernel = kernel;
+            m_RuleSet = ruleSet;
         }
 
 
@@ -25,8 +24,7 @@ namespace MusicFileCop.Core
 
         public void Configure(IMutableConfigurationNode configurationNode)
         {
-            var rules = m_Kernel.GetAll<IRule>();
-            foreach (var rule in rules)
+            foreach (var rule in m_RuleSet.AllRules)
             {
                 configurationNode.AddValue(GetRuleEnableSettingsName(rule), true);
                 configurationNode.AddValue(GetRuleSeveritySettingsName(rule), Severity.Warning);

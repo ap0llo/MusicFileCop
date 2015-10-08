@@ -2,6 +2,7 @@
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
+using MusicFileCop.Core.Rules;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Planning.Bindings;
@@ -24,6 +25,7 @@ namespace MusicFileCop.Core.DI
             Bind<IMetadataFactory>().To<MetadataFactory>().InSingletonScope();
             Bind<IConfigurationWriter>().To<ConfigurationWriter>();
 
+            Bind<IRuleSet>().To<RuleSet>().InSingletonScope();
 
             Bind<StructuedTextOutputWriter>().ToConstant(outputWriter);
             Bind<ITextOutputWriter>().ToConstant(outputWriter);

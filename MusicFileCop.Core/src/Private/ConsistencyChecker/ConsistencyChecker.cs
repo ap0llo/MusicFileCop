@@ -18,13 +18,14 @@ namespace MusicFileCop.Core
         readonly IKernel m_Kernel;
         readonly IMetadataMapper m_MetadataMapper;
         readonly IConfigurationMapper m_ConfigurationMapper;
+        readonly IRuleSet m_RuleSet;
 
-        readonly IDictionary<Type, IEnumerable<object>> m_RulesInstanceCache = new Dictionary<Type, IEnumerable<object>>();
+        
         readonly IDictionary<Type, object> m_OutputWriterCache = new Dictionary<Type, object>(); 
         readonly ISet<ICheckable> m_VisitedNodes = new HashSet<ICheckable>();
 
 
-        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IKernel kernel, IConfigurationMapper configurationMapper)
+        public ConsistencyChecker(IMetadataMapper fileMetadataMapper, IKernel kernel, IConfigurationMapper configurationMapper, IRuleSet ruleSet)
         {
             if (fileMetadataMapper == null)
             {
@@ -38,10 +39,15 @@ namespace MusicFileCop.Core
             {
                 throw new ArgumentNullException(nameof(configurationMapper));
             }
+            if (ruleSet == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSet));
+            }
 
             m_MetadataMapper = fileMetadataMapper;
             m_Kernel = kernel;
             m_ConfigurationMapper = configurationMapper;
+            m_RuleSet = ruleSet;
         }
 
 
@@ -50,7 +56,6 @@ namespace MusicFileCop.Core
             m_Logger.Info($"Starting consistency check, root directory {directory.FullPath}");
 
             m_VisitedNodes.Clear();
-            m_RulesInstanceCache.Clear();
 
             directory.Accept(this);
         }
@@ -176,7 +181,7 @@ namespace MusicFileCop.Core
 
         void ApplyRules<T>(T checkable, params IConfigurationNode[] configurations) where T : ICheckable
         {
-            var rules = GetRules<T>()
+            var rules = m_RuleSet.GetRules<T>()
                 .Where(r => r.IsApplicable(checkable))
                 .Where(r => IsRuleEnabled(r, configurations));
 
@@ -209,18 +214,7 @@ namespace MusicFileCop.Core
         }
             
             
-        IEnumerable<IRule<T>> GetRules<T>() where T : ICheckable
-        {
-            if (!m_RulesInstanceCache.ContainsKey(typeof (T)))
-            {
-                var rules = m_Kernel.GetAll<IRule<T>>().ToArray();
-                m_RulesInstanceCache.Add(typeof(T), rules);
-            }
-
-            return m_RulesInstanceCache[typeof(T)].Cast<IRule<T>>();
-        }
-
-
+     
         bool AlreadyVisited(ICheckable item) => m_VisitedNodes.Contains(item);
 
         void MarkVisited(ICheckable item) => m_VisitedNodes.Add(item);
