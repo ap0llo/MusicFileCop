@@ -30,12 +30,6 @@ namespace MusicFileCop
                 program.Run(args);
 
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Press enter to continue");
-            Console.ReadLine();
-
-            
         }
     }
 }
