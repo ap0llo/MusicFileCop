@@ -5,7 +5,6 @@ namespace MusicFileCop.Core
 {
     public static class TextWriterExtensions
     {
-
         public static void WriteIndentedLine(this TextWriter writer, string line, int indentationDepth)
         {
             var prefix = indentationDepth > 0

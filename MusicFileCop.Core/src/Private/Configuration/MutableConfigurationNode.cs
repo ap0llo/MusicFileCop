@@ -7,13 +7,7 @@ namespace MusicFileCop.Core.Configuration
     class MutableConfigurationNode : ConfigurationNodeBase, IMutableConfigurationNode
     {
         readonly IDictionary<string, string> m_Values = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-
-
-        public MutableConfigurationNode()
-        {
-            
-        }
-
+        
 
         public void AddValue<T>(string name, T value)
         {

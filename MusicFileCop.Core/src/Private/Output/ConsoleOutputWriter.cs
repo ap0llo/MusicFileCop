@@ -10,6 +10,9 @@ using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Core.Output
 {
+    /// <summary>
+    /// Output writer that writes all violations to the console in the order in which violations are found
+    /// </summary>
     class ConsoleOutputWriter : 
         IOutputWriter<IFile>, 
         IOutputWriter<IDirectory>,
@@ -18,7 +21,6 @@ namespace MusicFileCop.Core.Output
         IOutputWriter<IDisk>, 
         IOutputWriter<ITrack>
     {
-
 
         public void WriteViolation(IRule<IFile> violatedRule, Severity severity, IFile file)
         {
@@ -49,5 +51,6 @@ namespace MusicFileCop.Core.Output
         {
             Console.WriteLine($"Track {track.Disk.DiskNumber}.{track.TrackNumber} ('{track.Name}') from Album '{track.Album.Name}' by '{track.Album.Artist.Name}' violates Rule {violatedRule.GetType().Name}");
         }
+
     }
 }

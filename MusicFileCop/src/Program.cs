@@ -15,20 +15,19 @@ using TagLib.Mpeg;
 namespace MusicFileCop
 {
     class Program
-    {
-       
-
+    {       
         static void Main(string[] args)
         {
-            //get instance of Program using ninject
+            //get instance of MusicFileCop using ninject
             using (var kernel = new StandardKernel(new MainModule(), new CoreModule()))
             {
+                // run configurator (configures injections of configuration objects and rules)
                 var configurator = kernel.Get<IDynamicConfigurator>();
                 configurator.CreateDynamicBindings();
 
+                // run the program
                 var program = kernel.Get<MusicFileCop>();
                 program.Run(args);
-
             }
         }
     }

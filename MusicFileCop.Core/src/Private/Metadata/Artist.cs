@@ -13,10 +13,7 @@ namespace MusicFileCop.Core.Metadata
         public string Name { get; internal set; }
         
 
-        internal void AddAlbum(Album album)
-        {
-            m_Albums.Add(new Tuple<string, int>(album.Name, album.ReleaseYear), album);
-        }
+        internal void AddAlbum(Album album) => m_Albums.Add(new Tuple<string, int>(album.Name, album.ReleaseYear), album);
 
         internal bool AlbumExists(string name, int releaseYear) => m_Albums.ContainsKey(new Tuple<string, int>(name, releaseYear));
 
@@ -25,7 +22,11 @@ namespace MusicFileCop.Core.Metadata
         public void Accept(IVisitor visitor) => visitor.Visit(this);
 
 
-
+        /// <summary>
+        /// Comparer for <see cref="Tuple<string, int>"/>. Two tuples are considered equal,
+        /// if both the string and int are equal.
+        /// For string-comparison, <see cref="StringComparer.InvariantCultureIgnoreCase"/> is used
+        /// </summary>
         private class TupleComparer : IEqualityComparer<Tuple<string, int>>
         {
 

@@ -3,17 +3,23 @@ using System.Collections.Generic;
 
 namespace MusicFileCop.Core.Configuration
 {
-    abstract class ConfigurationNodeBase : IConfigurationNode
+    /// <summary>
+    ///     Base class for implementations of <see cref="IConfigurationNode" />
+    /// </summary>
+    internal abstract class ConfigurationNodeBase : IConfigurationNode
     {
-        static readonly ISet<Type> s_SupportedTypes = new HashSet<Type>()
+        static readonly ISet<Type> s_SupportedTypes = new HashSet<Type>
         {
-            typeof(string),
-            typeof(bool),
-            typeof(int)
-        }; 
+            typeof (string),
+            typeof (bool),
+            typeof (int)
+        };
 
+        // cache for parsed vaues
         readonly IDictionary<string, object> m_ParsedValues = new Dictionary<string, object>();
 
+
+        public abstract IEnumerable<string> Names { get; }
 
 
         public string GetValue(string name) => GetValue<string>(name);
@@ -21,23 +27,18 @@ namespace MusicFileCop.Core.Configuration
         public T GetValue<T>(string name)
         {
             T value;
-            if (TryGetValue<T>(name, out value))
+            if (TryGetValue(name, out value))
             {
                 return value;
             }
-            else
-            {
-                return HandleMissingValue<T>(name);
-            }
+            return HandleMissingValue<T>(name);
         }
-
-        public abstract IEnumerable<string> Names { get; }
 
         public bool TryGetValue<T>(string name, out T value)
         {
             if (m_ParsedValues.ContainsKey(name))
             {
-                value = (T)m_ParsedValues[name];
+                value = (T) m_ParsedValues[name];
                 return true;
             }
 
@@ -48,41 +49,35 @@ namespace MusicFileCop.Core.Configuration
                 m_ParsedValues.Add(name, value);
                 return true;
             }
-            else
-            {
-                value = default(T);
-                return false;
-            }
-          
+            value = default(T);
+            return false;
         }
 
         public abstract bool TryGetValue(string name, out string value);
 
-
-
+        /// <summary>
+        /// Called if a value cannot be located for the node
+        /// </summary>
         protected abstract T HandleMissingValue<T>(string name);
 
         protected object Parse<T>(string value)
         {
             EnsureTypeIsSupported<T>();
 
-            if (typeof(T) == typeof(string))
+            if (typeof (T) == typeof (string))
             {
                 return value;
             }
-            else if (typeof(T) == typeof(bool))
+            if (typeof (T) == typeof (bool))
             {
                 bool result;
                 if (bool.TryParse(value, out result))
                 {
                     return result;
                 }
-                else
-                {
-                    throw new ArgumentException($"Value '{value}' cannot be parsed to bool");
-                }
+                throw new ArgumentException($"Value '{value}' cannot be parsed to bool");
             }
-            else if (typeof(T) == typeof(int))
+            if (typeof (T) == typeof (int))
             {
                 int result;
 
@@ -90,38 +85,28 @@ namespace MusicFileCop.Core.Configuration
                 {
                     return result;
                 }
-                else
-                {
-                    throw new ArgumentException($"Value '{value}' cannot be parsed to int");
-                }
+                throw new ArgumentException($"Value '{value}' cannot be parsed to int");
             }
-            else if (typeof (T).IsEnum)
+            if (typeof (T).IsEnum)
             {
-
-
                 try
                 {
-                    return (T) Enum.Parse(typeof(T), value, true);
+                    return (T) Enum.Parse(typeof (T), value, true);
                 }
                 catch (ArgumentException ex)
                 {
-                    throw new ArgumentException($"Value '{value}' cannot be parsed to enum type {typeof(T)}", ex);                    
+                    throw new ArgumentException($"Value '{value}' cannot be parsed to enum type {typeof (T)}", ex);
                 }
             }
-            else
-            {
-                throw new NotSupportedException($"Type '{typeof(T)}' is not supported");
-            }
+            throw new NotSupportedException($"Type '{typeof (T)}' is not supported");
         }
 
         protected void EnsureTypeIsSupported<T>()
         {
-            if (!s_SupportedTypes.Contains(typeof (T)) && !typeof(T).IsEnum)
+            if (!s_SupportedTypes.Contains(typeof (T)) && !typeof (T).IsEnum)
             {
-                throw new NotSupportedException($"Type '{typeof(T)}' is not supported");
+                throw new NotSupportedException($"Type '{typeof (T)}' is not supported");
             }
         }
-
-
     }
 }

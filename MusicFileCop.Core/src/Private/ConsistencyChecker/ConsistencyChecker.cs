@@ -11,7 +11,7 @@ using NLog;
 
 namespace MusicFileCop.Core
 {
-    [ConfigurationNamespace(ConfigurationNamespace)]
+    [ConfigurationNamespace(s_ConfigurationNamespace)]
     class ConsistencyChecker : ConsistencyCheckerBase, IConsistencyChecker, IVisitor
     {
         readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
@@ -19,8 +19,7 @@ namespace MusicFileCop.Core
         readonly IMetadataMapper m_MetadataMapper;
         readonly IConfigurationMapper m_ConfigurationMapper;
         readonly IRuleSet m_RuleSet;
-
-        
+       
         readonly IDictionary<Type, object> m_OutputWriterCache = new Dictionary<Type, object>(); 
         readonly ISet<ICheckable> m_VisitedNodes = new HashSet<ICheckable>();
 
@@ -51,6 +50,9 @@ namespace MusicFileCop.Core
         }
 
 
+        /// <summary>
+        /// Recursively checks the consistency of the specified directory
+        /// </summary>        
         public void CheckConsistency(IDirectory directory)
         {
             m_Logger.Info($"Starting consistency check, root directory {directory.FullPath}");
@@ -59,7 +61,6 @@ namespace MusicFileCop.Core
 
             directory.Accept(this);
         }
-
 
         public void Visit(IDirectory directory)
         {
@@ -178,19 +179,22 @@ namespace MusicFileCop.Core
             track?.Artist.Accept(this);
         }
 
-
+        /// <summary>
+        /// Applies all rules to the specified item
+        /// </summary>
         void ApplyRules<T>(T checkable, params IConfigurationNode[] configurations) where T : ICheckable
         {
+            // get all rules for the type, filter out rules that are disabled or not applicate
             var rules = m_RuleSet.GetRules<T>()
-                .Where(r => r.IsApplicable(checkable))
-                .Where(r => IsRuleEnabled(r, configurations));
+                .Where(r => IsRuleEnabled(r, configurations))
+                .Where(r => r.IsApplicable(checkable));
 
             foreach (var rule in rules)
             {
+                // if a violation was found, write a violatioion to the output writer
                 if (!rule.IsConsistent(checkable))
                 {
                     var severity = configurations.Select(c => c.GetValue<Severity>(GetRuleSeveritySettingsName(rule))).Max();
-
                     GetOutputWriter<T>().WriteViolation(rule, severity, checkable);
                 }                
             }
@@ -212,9 +216,7 @@ namespace MusicFileCop.Core
 
             return (IOutputWriter <T>) m_OutputWriterCache[typeof (T)];
         }
-            
-            
-     
+                           
         bool AlreadyVisited(ICheckable item) => m_VisitedNodes.Contains(item);
 
         void MarkVisited(ICheckable item) => m_VisitedNodes.Add(item);

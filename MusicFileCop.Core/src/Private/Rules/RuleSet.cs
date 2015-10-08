@@ -6,9 +6,11 @@ using Ninject;
 
 namespace MusicFileCop.Core.Rules
 {
+    /// <summary>
+    /// Default implementation of <see cref="IRuleSet"/>
+    /// </summary>
     public class RuleSet : IRuleSet
     {
-
         readonly IKernel m_Kernel;
         readonly Lazy<IEnumerable<IRule>> m_AllRules;
         readonly IDictionary<Type, IEnumerable<IRule>> m_Rules = new ConcurrentDictionary<Type, IEnumerable<IRule>>();

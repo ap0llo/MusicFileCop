@@ -4,7 +4,7 @@ namespace MusicFileCop.Core
 {
     class ConsistencyCheckerBase
     {
-        public const string ConfigurationNamespace = "ConsistencyChecker";
+        public const string s_ConfigurationNamespace = "ConsistencyChecker";
 
         protected string GetRuleEnableSettingsName(IRule rule) => $"{rule.Id}:Enabled";
 

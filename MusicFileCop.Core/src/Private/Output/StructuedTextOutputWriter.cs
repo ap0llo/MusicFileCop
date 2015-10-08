@@ -8,7 +8,10 @@ using MusicFileCop.Core.Rules;
 
 namespace MusicFileCop.Core.Output
 {
-    class StructuedTextOutputWriter :
+    /// <summary>
+    ///     Output Writer that collects all rule violations and can write them to a TextWriter ordered by directory and file
+    /// </summary>
+    internal class StructuedTextOutputWriter :
         IOutputWriter<IFile>,
         IOutputWriter<IDirectory>,
         IOutputWriter<IArtist>,
@@ -34,6 +37,7 @@ namespace MusicFileCop.Core.Output
 
         public void WriteViolation(IRule<IAlbum> violatedRule, Severity severity, IAlbum album)
         {
+            // add violations to all directories contain files that are part of the album
             foreach (var directory in m_MetadataMapper.GetDirectories(album))
             {
                 AddRuleViolation(directory, violatedRule);
@@ -42,6 +46,7 @@ namespace MusicFileCop.Core.Output
 
         public void WriteViolation(IRule<IArtist> violatedRule, Severity severity, IArtist artist)
         {
+            // add violations to all directories contain files that are from this aritst
             foreach (var directory in m_MetadataMapper.GetDirectories(artist))
             {
                 AddRuleViolation(directory, violatedRule);
@@ -55,6 +60,7 @@ namespace MusicFileCop.Core.Output
 
         public void WriteViolation(IRule<IDisk> violatedRule, Severity severity, IDisk disk)
         {
+            //add violation for all of the disk's directories
             foreach (var directory in m_MetadataMapper.GetDirectories(disk))
             {
                 AddRuleViolation(directory, violatedRule);
@@ -70,6 +76,19 @@ namespace MusicFileCop.Core.Output
         {
             var file = m_MetadataMapper.GetFile(track);
             AddRuleViolation(file, violatedRule);
+        }
+
+        public void WriteTo(TextWriter writer)
+        {
+            // determine root directories (usually, there shouldn't be more than one)
+            var roots = m_RuleViolationsByDirectory.Keys.Select(GetRoot)
+                .Union(m_RuleViolationsByFile.Keys.Select(GetRoot))
+                .Distinct().ToList();
+
+            foreach (var rootDirectory in roots)
+            {
+                WriteTo(writer, rootDirectory, 0);
+            }
         }
 
 
@@ -112,27 +131,19 @@ namespace MusicFileCop.Core.Output
         }
 
 
-        public void WriteTo(TextWriter writer)
-        {
-            var roots = m_RuleViolationsByDirectory.Keys.Select(GetRoot)
-                .Union(m_RuleViolationsByFile.Keys.Select(GetRoot))
-                .Distinct().ToList();
-
-            foreach (var rootDirectory in roots)
-            {
-                WriteTo(writer, rootDirectory, 0);
-            }
-        }
-
         void WriteTo(TextWriter writer, IDirectory directory, int indentationDepth)
         {
+            // get violations for the current directory
             var violations = GetRuleViolations(directory).ToList();
             if (violations.Any())
             {
+                // write directory path, then write all violated rules
                 writer.WriteIndentedLine(directory.FullPath, indentationDepth);
                 writer.WriteLine();
                 WriteTo(writer, violations, indentationDepth + 1);
             }
+
+            //recurse
 
             foreach (var file in directory.Files)
             {
@@ -147,9 +158,12 @@ namespace MusicFileCop.Core.Output
 
         void WriteTo(TextWriter writer, IFile file, int indentationDepth)
         {
+            // get all violations for the file
             var violations = GetRuleViolations(file).ToList();
+
             if (violations.Any())
             {
+                //write file path and violations to output
                 writer.WriteIndentedLine(file.FullPath, indentationDepth);
                 WriteTo(writer, violations, indentationDepth + 1);
             }
@@ -157,6 +171,7 @@ namespace MusicFileCop.Core.Output
 
         void WriteTo(TextWriter writer, IEnumerable<IRule> violatedRules, int indentationDepth)
         {
+            // write the specified rules to the output
             writer.WriteIndentedLine("Violated Rules:", indentationDepth);
             foreach (var rule in violatedRules.Distinct())
             {
@@ -176,6 +191,5 @@ namespace MusicFileCop.Core.Output
         }
 
         IDirectory GetRoot(IFile file) => GetRoot(file.Directory);
-       
     }
 }

@@ -18,6 +18,9 @@ using Ninject;
 
 namespace MusicFileCop
 {
+    /// <summary>
+    /// Main program 
+    /// </summary>
     class MusicFileCop
     {
         
@@ -80,15 +83,18 @@ namespace MusicFileCop
 
         public int Run(string[] args)
         {
-
+            // parse commandline and swicth based on selected command
             return Parser.Default.ParseArguments<CheckOptions, ExportDefaultConfigOptions, ListRulesOptions>(args).MapResult(
+                
+                // run consistency check
                 (CheckOptions options) =>
                     {
-                        if (!System.IO.Directory.Exists(options.Path))
+                        if (!Directory.Exists(options.Path))
                         {
                             Console.Error.Write($"Directory '{options.Path}'not found");
                             return 1;
                         }
+                     
                         // load file system
                         var rootDirectory = m_FileSystemLoader.LoadDirectory(options.Path);
                         
@@ -98,8 +104,10 @@ namespace MusicFileCop
                         //load media metadata
                         m_MetadataLoader.LoadMetadata(rootDirectory);
 
+                        // run actual consistency check
                         m_ConsistencyChecker.CheckConsistency(rootDirectory);
 
+                        //write results to file
                         using (var stream = new StreamWriter(System.IO.File.Open(options.OutputFile, FileMode.Create)))
                         {
                             m_OutputWriter.WriteTo(stream);
@@ -107,11 +115,15 @@ namespace MusicFileCop
 
                         return 0;
                     },
+
+                // export the default configuration to a file
                 (ExportDefaultConfigOptions opts) =>
                 {
                     m_ConfigWriter.WriteConfiguration(m_DefaultConfiguration, opts.OutputFile);
                     return 0;
                 },
+
+                //print a list of rules to the console
                 (ListRulesOptions opts) =>
                 {                    
                     foreach (var rule in m_RuleSet.AllRules)
@@ -124,6 +136,8 @@ namespace MusicFileCop
 
                     return 0;
                 },
+
+                // unknown parameters => error
                 (IEnumerable<Error> errs) => 1                
             );
             

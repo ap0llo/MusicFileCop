@@ -19,6 +19,7 @@ namespace MusicFileCop.Core
         readonly IKernel m_Kernel;
         readonly IMutableConfigurationNode m_DefaultConfigurationNode;
 
+
         /// <summary>
         /// Initializes a new instance of DynamicConfigurator
         /// </summary>
@@ -54,23 +55,21 @@ namespace MusicFileCop.Core
 
         void CreateRuleBindings()
         {
-            // get all checkables
-            var ruleTypes = GetCheckableTypes()
-                .Select(checkableType => typeof(IRule<>).MakeGenericType(checkableType))
-                .ToArray();
-
+            // register all classes implementing IRile
             m_Kernel.Bind(x =>
                 x.FromAssembliesMatching(s_RulesAssemblyName)
                     .SelectAllClasses()
-                    .InheritedFromAny(ruleTypes)
+                    .InheritedFrom<IRule>()                    
                     .BindAllInterfaces()
                 );
         }
 
         void CreateConfigurationBindings()
         {
+            // find all types with a ConfigurationNamespaceAttribute
             var configurableTypes = GetConfigurableTypes();
 
+            // for every type, configure Ninject to inject a specific configuration mapper
             foreach (var type in configurableTypes)
             {
                 m_Kernel.Bind<IConfigurationMapper>()
@@ -109,15 +108,7 @@ namespace MusicFileCop.Core
 
         
 
-        internal IEnumerable<Type> GetCheckableTypes() => GetCheckableTypes(Assembly.GetAssembly(typeof(CoreModule)));
-
-        internal IEnumerable<Type> GetCheckableTypes(Assembly assembly)
-        {
-            return assembly.GetTypes()
-                .Where(t => typeof (ICheckable).IsAssignableFrom(t))
-                .Where(t => t.IsPublic);
-        }
-
+ 
         internal IEnumerable<Type> GetConfigurableTypes()
         {
             return GetConfigurableTypes(Assembly.Load("MusicFileCop.Rules"))
@@ -135,8 +126,7 @@ namespace MusicFileCop.Core
             var configurationNamespace = ruleImplemetationType.GetCustomAttribute<ConfigurationNamespaceAttribute>().Namespace;
 
             return context.Kernel.Get<PrefixConfigurationMapper>(
-                new ConstructorArgument("settingsPrefix", configurationNamespace)
-                );
+                new ConstructorArgument("settingsPrefix", configurationNamespace));
         }
     }
 }

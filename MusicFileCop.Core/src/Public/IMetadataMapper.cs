@@ -4,6 +4,10 @@ using MusicFileCop.Core.Metadata;
 
 namespace MusicFileCop.Core
 {
+
+    /// <summary>
+    /// Mapper to get filesystem objects for metadata object and vice versa
+    /// </summary>
     public interface IMetadataMapper
     {
         void AddMapping(ITrack track, IFile file);

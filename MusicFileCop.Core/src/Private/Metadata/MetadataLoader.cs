@@ -11,10 +11,10 @@ namespace MusicFileCop.Core.Metadata
 {
     class MetaDataLoader : IMetadataLoader
     {
+        //list of file extensions recognized as music files
         static readonly ISet<string> s_MusicFileExtensions = new HashSet<string>(new[] { ".mp3" }, StringComparer.InvariantCultureIgnoreCase);
 
         readonly ILogger m_Logger = LogManager.GetCurrentClassLogger();
-
         readonly IMetadataFactory m_MetadataFactory;
         readonly IMetadataMapper m_FileMetadataMapper;
 
@@ -22,9 +22,13 @@ namespace MusicFileCop.Core.Metadata
         public MetaDataLoader(IMetadataFactory metadataFactory, IMetadataMapper fileMetadataMapper)
         {
             if(metadataFactory == null)
+            {
                 throw new ArgumentNullException(nameof(metadataFactory));
+            }
             if (fileMetadataMapper == null)
+            {
                 throw new ArgumentNullException(nameof(fileMetadataMapper));
+            }
 
             m_MetadataFactory = metadataFactory;
             m_FileMetadataMapper = fileMetadataMapper;
@@ -46,7 +50,6 @@ namespace MusicFileCop.Core.Metadata
 
         void LoadMetadata(IFile file)
         {
-
             m_Logger.Info($"Loading metadata for file '{file.FullPath}'");
 
             using (var audioFile = new AudioFile(file.FullPath))

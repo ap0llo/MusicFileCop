@@ -11,16 +11,14 @@ namespace MusicFileCop.Core
 {
     class MetadataMapper : IMetadataMapper
     {
-        //TODO: Use "doublesided dictionary"
         readonly IDictionary<IFile, ITrack> m_FileToTrackMapping = new ConcurrentDictionary<IFile, ITrack>();
-        readonly IDictionary<ITrack, IFile> m_TrackToFileMapping = new ConcurrentDictionary<ITrack, IFile>();
-        
+        readonly IDictionary<ITrack, IFile> m_TrackToFileMapping = new ConcurrentDictionary<ITrack, IFile>();        
         readonly IDictionary<IDisk, IEnumerable<IDirectory>> m_DiskDirectoriesCache = new ConcurrentDictionary<IDisk, IEnumerable<IDirectory>>();
         readonly IDictionary<IArtist, IEnumerable<IDirectory>> m_ArtistDirectoriesCache = new ConcurrentDictionary<IArtist, IEnumerable<IDirectory>>();
         readonly IDictionary<IAlbum, IEnumerable<IDirectory>> m_AlbumDirectoriesCache = new ConcurrentDictionary<IAlbum, IEnumerable<IDirectory>>(); 
 
-        public IEnumerable<IDirectory> GetDirectories(IDisk disk) => ExecuteWithCaching(m_DiskDirectoriesCache, disk, d => GetDirectories(d.Tracks).ToArray());
 
+        public IEnumerable<IDirectory> GetDirectories(IDisk disk) => ExecuteWithCaching(m_DiskDirectoriesCache, disk, d => GetDirectories(d.Tracks).ToArray());
 
         public bool TryGetFile(ITrack track, out IFile file) => m_TrackToFileMapping.TryGetValue(track, out file);
         
@@ -87,9 +85,7 @@ namespace MusicFileCop.Core
 
         }
 
-
-
-        TRESULT ExecuteWithCaching<TPARAM, TRESULT>(IDictionary<TPARAM, TRESULT> cache, TPARAM parameter, Func<TPARAM, TRESULT> func)
+        TResult ExecuteWithCaching<TParam, TResult>(IDictionary<TParam, TResult> cache, TParam parameter, Func<TParam, TResult> func)
         {
 
             if (cache.ContainsKey(parameter))
