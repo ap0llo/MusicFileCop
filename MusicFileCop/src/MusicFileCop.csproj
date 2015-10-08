@@ -6,9 +6,9 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MusicFileCop</RootNamespace>
-    <AssemblyName>MusicFileCop</AssemblyName>    
+    <AssemblyName>MusicFileCop</AssemblyName>
   </PropertyGroup>
-  <Import Project="$(MSBuildThisFileDirectory)..\..\common\CommonProperties.properties" />  
+  <Import Project="$(MSBuildThisFileDirectory)..\..\common\CommonProperties.properties" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="CL\CheckOptions.cs" />
     <Compile Include="CL\ExportDefaultConfigOptions.cs" />
+    <Compile Include="CL\ListRulesOptions.cs" />
     <Compile Include="DI\MainModule.cs" />
     <Compile Include="MusicFileCop.cs" />
     <Compile Include="Program.cs" />

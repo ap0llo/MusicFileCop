@@ -211,3 +211,7 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 *.DotSettings
+/MusicFileCop.Core/test/MusicFileCop.Core.Test.nuget.props
+/MusicFileCop.Core/test/MusicFileCop.Core.Test.nuget.targets
+/MusicFileCop/test/MusicFileCop.Test.nuget.props
+/MusicFileCop/test/MusicFileCop.Test.nuget.targets

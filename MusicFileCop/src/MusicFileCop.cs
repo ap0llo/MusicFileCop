@@ -12,6 +12,8 @@ using MusicFileCop.Core.Configuration;
 using MusicFileCop.Core.FileSystem;
 using MusicFileCop.Core.Metadata;
 using MusicFileCop.Core.Output;
+using MusicFileCop.Core.Rules;
+using Ninject;
 
 
 namespace MusicFileCop
@@ -19,6 +21,7 @@ namespace MusicFileCop
     class MusicFileCop
     {
 
+        readonly IKernel m_Kernel;
         readonly IFileSystemLoader m_FileSystemLoader;
         readonly IConfigurationLoader m_ConfigLoader;
         readonly IMetadataLoader m_MetadataLoader;
@@ -29,7 +32,7 @@ namespace MusicFileCop
 
         public MusicFileCop(IFileSystemLoader fileSystemLoader, IConfigurationLoader configurationLoader,
                             IMetadataLoader metadataLoader, IConsistencyChecker consistencyChecker, 
-                            IDefaultConfigurationNode defaultConfiguration, IConfigurationWriter configWriter, ITextOutputWriter outputWriter)
+                            IDefaultConfigurationNode defaultConfiguration, IConfigurationWriter configWriter, ITextOutputWriter outputWriter, IKernel kernel)
         {
             if (fileSystemLoader == null)
             {
@@ -59,6 +62,10 @@ namespace MusicFileCop
             {
                 throw new ArgumentNullException(nameof(outputWriter));
             }
+            if (kernel == null)
+            {
+                throw new ArgumentNullException(nameof(kernel));
+            }
 
             this.m_FileSystemLoader = fileSystemLoader;
             this.m_ConfigLoader = configurationLoader;
@@ -67,13 +74,14 @@ namespace MusicFileCop
             this.m_DefaultConfiguration = defaultConfiguration;
             m_ConfigWriter = configWriter;
             m_OutputWriter = outputWriter;
+            m_Kernel = kernel;
         }
 
 
         public int Run(string[] args)
         {
 
-            return Parser.Default.ParseArguments<CheckOptions, ExportDefaultConfigOptions>(args).MapResult(
+            return Parser.Default.ParseArguments<CheckOptions, ExportDefaultConfigOptions, ListRulesOptions>(args).MapResult(
                 (CheckOptions options) =>
                     {
                         if (!System.IO.Directory.Exists(options.Path))
@@ -102,6 +110,19 @@ namespace MusicFileCop
                 (ExportDefaultConfigOptions opts) =>
                 {
                     m_ConfigWriter.WriteConfiguration(m_DefaultConfiguration, opts.OutputFile);
+                    return 0;
+                },
+                (ListRulesOptions opts) =>
+                {
+                    var rules = m_Kernel.GetAll<IRule>();
+                    foreach (var rule in rules)
+                    {
+                        Console.WriteLine();
+
+                        Console.WriteLine(" " + rule.Id);
+                        Console.WriteLine(" \t" + rule.Description);
+                    }
+
                     return 0;
                 },
                 (IEnumerable<Error> errs) => 1                
