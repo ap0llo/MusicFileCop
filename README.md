@@ -1,6 +1,8 @@
 MusicFileCop
 ============
 
+[![Build status](https://ci.appveyor.com/api/projects/status/9cf9uyom74neukg6?svg=true)](https://ci.appveyor.com/project/ap0llo/musicfilecop)
+
 MusicFileCop is a tool that aids the management of music collections. 
 It searches a directory for music files and applies a set of rules on them.
 
