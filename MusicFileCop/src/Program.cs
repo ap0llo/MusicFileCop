@@ -9,8 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using MusicFileCop.Core;
 using MusicFileCop.Core.DI;
-using TagLib;
-using TagLib.Mpeg;
 
 namespace MusicFileCop
 {
@@ -18,7 +16,7 @@ namespace MusicFileCop
     {       
         static void Main(string[] args)
         {
-            //get instance of MusicFileCop using ninject
+            //get instance of MusicFileCop using Ninject
             using (var kernel = new StandardKernel(new MainModule(), new CoreModule()))
             {
                 // run configurator (configures injections of configuration objects and rules)

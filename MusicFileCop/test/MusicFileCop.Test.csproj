@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
     <ProjectGuid>{25E6C3EA-E09C-41E5-B67C-216FEE56D968}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MusicFileCop.Test</RootNamespace>
-    <AssemblyName>MusicFileCop.Test</AssemblyName>    
+    <AssemblyName>MusicFileCop.Test</AssemblyName>
   </PropertyGroup>
-  <Import Project="$(MSBuildThisFileDirectory)..\..\common\CommonProperties.properties" />    
+  <Import Project="$(MSBuildThisFileDirectory)..\..\common\CommonProperties.properties" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -30,9 +31,9 @@
       <Project>{032cff31-5cad-4507-b9a5-604a91f2ff55}</Project>
       <Name>MusicFileCop</Name>
     </ProjectReference>
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
-    <None Include="project.json" />
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
